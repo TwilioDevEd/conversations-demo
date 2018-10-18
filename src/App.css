@@ -1,0 +1,11 @@
+header > h1, header > h2 {
+    text-align: center;
+}
+
+header > h2 {
+    font-size: 18pt;
+}
+
+.hidden {
+    display: none;
+}

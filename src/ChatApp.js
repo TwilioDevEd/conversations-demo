@@ -74,8 +74,12 @@ class ChatApp extends React.Component {
   };
 
   clientInitiated = () => {
+    console.log("Initiated!");
     this.setState({ statusString: 'Loading Conversations…', chatReady: true }, () => {
-      this.chatClient.on('channelAdded', channel => this.state.channels.push(channel));
+      console.log("State changed!");
+      this.chatClient.on('channelJoined', channel => {
+          console.log("Channel joined!!!!");
+          this.setState({channels: [...this.state.channels, channel]})});
       this.chatClient.getSubscribedChannels()
         .then((channel_paginator) => {
           this.setState({ channels: channel_paginator.items, statusString: `Welcome, ${this.state.name}!`});

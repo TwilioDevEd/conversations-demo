@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Chat.css';
+import { isUndefined } from 'util';
 
 class ChatChannel extends Component {
   constructor(props) {
@@ -29,33 +30,34 @@ class ChatChannel extends Component {
     }
   };
 
-  componentWillMount = () => {
-      this.joinThisChannel().then(this.loadMessagesFor);
-  };
+  componentDidMount = () => {
+      if (this.state.channelProxy) {
+        this.loadMessagesFor(this.state.channelProxy);
 
-  joinThisChannel = () => {
-    let thisChannel = this.state.channelProxy;
-
-    if (!this.state.boundChannels.has(thisChannel)) {
-        thisChannel.on('messageAdded', m => this.messageAdded(m, thisChannel));
-        this.state.boundChannels.add(thisChannel);
-    }
-    
-    if (thisChannel.status !== 'joined')
-        return thisChannel.join()
-            .catch(err => console.error(`Couldn't join ${thisChannel.sid}!`, err));
-    else
-        return Promise.resolve(thisChannel);
+        if (!this.state.boundChannels.has(this.state.channelProxy)) {
+            let newChannel = this.state.channelProxy;
+            newChannel.on('messageAdded', m => this.messageAdded(m, newChannel));
+            this.setState({boundChannels: new Set([...this.state.boundChannels, newChannel])});
+        }
+      }
   }
 
   componentDidUpdate = (oldProps, oldState) => {
     if (this.state.channelProxy !== oldState.channelProxy) {
-        this.joinThisChannel().then(this.loadMessagesFor);
+        this.loadMessagesFor(this.state.channelProxy);
+
+        if (!this.state.boundChannels.has(this.state.channelProxy)) {
+            let newChannel = this.state.channelProxy;
+            newChannel.on('messageAdded', m => this.messageAdded(m, newChannel));
+            this.setState({boundChannels: new Set([...this.state.boundChannels, newChannel])});
+        }
     }
   }
 
   static getDerivedStateFromProps(newProps, oldState) {
-    if (oldState.channelProxy != newProps.channelProxy) {
+    let logic = (oldState.loadingState === 'initializing') || oldState.channelProxy !== newProps.channelProxy;
+    console.log("xxx", oldState.channelProxy, newProps.channelProxy, logic);
+    if (logic) {
       return { loadingState: 'loading messages', channelProxy: newProps.channelProxy };
     } else {
       return null;

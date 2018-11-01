@@ -4,9 +4,6 @@ const bodyParser = require('body-parser');
 const twilio     = require('twilio');
 const ngrok      = require('ngrok');
 
-const client = new twilio(config.twilio.apiKey, config.twilio.apiSecret, {accountSid: config.twilio.accountSid});
-console.log("twilio is", client);
-
 const app = new express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -33,15 +30,16 @@ app.listen(config.port, () => {
 
 const request = require('request-promise');
 console.log(twilio);
+let client = {};
 client.Sessions = (session_sid) => {
   console.log("A");
   return {
     Participants: {
       add: (options) => {
         console.log(`Adding ${options.identity}…`);
-        return request(`http://${config.sessionsHost}:8920/v1/Sessions/${session_sid}/Participants`, {
+        return request(`https://messaging.twilio.com/v1/Sessions/${session_sid}/Participants`, {
           method: 'POST',
-          headers: { 'I-Twilio-Auth-Account': config.twilio.accountSid },
+          auth: { user: config.twilio.apiKey, password: config.twilio.apiSecret },
           form: {
             Identity: options.identity
           }

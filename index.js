@@ -48,15 +48,32 @@ client.Sessions = (session_sid) => {
     }
   }
 }
+
+
+let me = "Tack tackleton";
+
+
+
+// ============================================
+// ============================================
+// ========= HANDLE NEW-SESSION HOOK ==========
+// ============================================
+// ============================================
 app.post('/chat', (req, res) => {
-  console.log("Got a webhook!", req.body);
   if (req.body.EventType === 'onChannelAdded') {
-    let me = "Tack tackleton";
-    client.Sessions(req.body.ChannelSid).Participants.add({identity: me})
+    client
+      .Sessions(req.body.ChannelSid)
+      .Participants.add({identity: me})
+      
       .then(result => console.log(`Added '${me}' to ${req.body.ChannelSid}.`))
       .catch(err => console.error(`Failed to add a member to ${req.body.ChannelSid}!`, err));
   }
 });
+
+
+
+
+
 
 var ngrokOptions = {
   proto: 'http',

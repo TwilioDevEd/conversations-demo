@@ -60,13 +60,14 @@ let me = "Tack tackleton";
 // ============================================
 // ============================================
 app.post('/chat', (req, res) => {
-  if (req.body.EventType === 'onChannelAdded') {
+  console.log("Received a webhook:", req.body.EventType);
+  if (req.body.EventType === 'onSessionAdded') {
     client
-      .Sessions(req.body.ChannelSid)
+      .Sessions(req.body.SessionSid)
       .Participants.add({identity: me})
       
-      .then(result => console.log(`Added '${me}' to ${req.body.ChannelSid}.`))
-      .catch(err => console.error(`Failed to add a member to ${req.body.ChannelSid}!`, err));
+      .then(result => console.log(`Added '${me}' to ${req.body.SessionSid}.`))
+      .catch(err => console.error(`Failed to add a member to ${req.body.SessionSid}!`, err));
   }
 });
 

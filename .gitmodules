@@ -1,0 +1,3 @@
+[submodule "node_modules/twilio"]
+	path = node_modules/twilio
+	url = git@code.hq.twilio.com:rtd/twilio-node.sessions.git

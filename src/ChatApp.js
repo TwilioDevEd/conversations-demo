@@ -1,6 +1,6 @@
 import React from 'react';
 import NameBox from './NameBox.js';
-import Chat from '@twilio/twilio-chat';
+import Chat from 'twilio-chat';
 import ChatChannel from './ChatChannel';
 import './Chat.css';
 import { BrowserRouter as Router, NavLink, Route } from 'react-router-dom';

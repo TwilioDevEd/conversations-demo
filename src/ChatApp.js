@@ -1,9 +1,9 @@
 import React from 'react';
 import NameBox from './NameBox.js';
-import Chat from 'twilio-chat';
+import {Client as ChatClient} from 'twilio-chat';
 import ChatChannel from './ChatChannel';
 import './Chat.css';
-import { BrowserRouter as Router, NavLink, Route } from 'react-router-dom';
+import { BrowserRouter as Router, NavLink, Route, Redirect } from 'react-router-dom';
 
 class ChatApp extends React.Component {
   constructor(props) {
@@ -50,7 +50,8 @@ class ChatApp extends React.Component {
       token: '',
       chatReady: false,
       messages: [],
-      newMessage: ''
+      newMessage: '',
+      channels: []
     });
     localStorage.removeItem('name');
     this.chatClient.shutdown();
@@ -67,31 +68,29 @@ class ChatApp extends React.Component {
       });
   };
 
-  initChat = () => {
-    this.chatClient = new Chat(this.state.token, {logLevel: "info"});
+  initChat = async () => {
+    window.chatClient = ChatClient;
+    this.chatClient = await ChatClient.create(this.state.token, {logLevel: "info"});
     this.setState({statusString: 'Connecting to Twilio…'});
-    this.chatClient.initialize().then(() => {console.log("Initialized."); this.clientInitiated()});
-  };
 
-  clientInitiated = () => {
-    console.log("Initiated!");
-    this.setState({ statusString: 'Loading Conversations…', chatReady: true }, () => {
-      console.log("State changed!");
-      this.chatClient.on('channelJoined', channel => {
-          console.log("Channel joined!!!!");
-          this.setState({channels: [...this.state.channels, channel]})});
-      this.chatClient.getSubscribedChannels()
-        .then((channel_paginator) => {
-          this.setState({ channels: channel_paginator.items, statusString: `Welcome, ${this.state.name}!`});
-        })
-        .catch("While fetching channels…", console.error);
+    this.chatClient.on('connectionStateChanged', (state) => {
+      if (state === 'connecting') this.setState({statusString: 'Connecting to Twilio…'});
+      if (state === 'connected') { this.setState({statusString: 'You are connected.'}) }
+      if (state === 'disconnecting') this.setState({statusString: 'Disconnecting from Twilio…', chatReady: false});
+      if (state === 'disconnected') this.setState({statusString: 'Disconnected.', chatReady: false});
+      if (state === 'denied') this.setState({statusString: 'Failed to connect.', chatReady: false});
     });
+    this.chatClient.on('channelJoined', channel => {
+      this.setState({channels: [...this.state.channels, channel]})
+    });
+    this.chatClient.on('channelLeft', thisChannel => {
+      this.setState({channels: [...this.state.channels.filter(it => it !== thisChannel)]});
+    })
   };
 
   messagesLoaded = messagePage => {
     this.setState({ messages: messagePage.items });
   };
-
 
   render() {
     var loginOrChat;
@@ -117,11 +116,16 @@ class ChatApp extends React.Component {
                 <div id="SelectedChannel" className="col-lg">
                   <Route path="/channels/:selected_channel" render={({match}) => {
                     let selectedChannelSid = match.params.selected_channel;
-                    console.log(this.state.channels.find(it => it.sid === selectedChannelSid));
-                    return (
-                      <ChatChannel channelProxy={this.state.channels.find(it => it.sid === selectedChannelSid)} 
-                                   myIdentity={this.state.name} />
-                    );
+                    let selectedChannel = this.state.channels.find(it => it.sid === selectedChannelSid);
+                    if (selectedChannel)
+                      return (
+                        <ChatChannel channelProxy={selectedChannel} 
+                                    myIdentity={this.state.name} />
+                      );
+                    else
+                      return (
+                        <Redirect to="/channels" />
+                      )
                   }} />
 
                   <Route exact path="/" render={(match) => <h4>{this.state.statusString}</h4> } />

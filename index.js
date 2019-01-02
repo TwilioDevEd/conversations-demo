@@ -13,7 +13,6 @@ app.post('/token/:identity', (request, response) => {
   const accessToken = new twilio.jwt.AccessToken(config.twilio.accountSid, config.twilio.apiKey, config.twilio.apiSecret);
   const chatGrant = new twilio.jwt.AccessToken.ChatGrant({
     serviceSid: config.twilio.chatServiceSid,
-    endpointId: `${identity}:browser`
   });
   accessToken.addGrant(chatGrant);
   accessToken.identity = identity;

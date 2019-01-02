@@ -10,6 +10,5 @@ module.exports = {
     chatServiceSid: process.env.TWILIO_CHAT_SERVICE_SID
   },
   port: process.env.PORT || 3001,
-  ngrokSubdomain: 'chatwebhooks',
-  sessionsHost: 'ec2-18-208-136-27.compute-1.amazonaws.com'
+  ngrokSubdomain: 'chatwebhooks'
 }

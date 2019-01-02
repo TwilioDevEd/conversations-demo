@@ -27,6 +27,26 @@ app.listen(config.port, () => {
   console.log(`Application started at localhost:${config.port}`);
 });
 
+const request = require('request-promise');
+console.log(twilio);
+let client = {};
+client.Sessions = (session_sid) => {
+  console.log("A");
+  return {
+    Participants: {
+      add: (options) => {
+        console.log(`Adding ${options.identity}…`);
+        return request(`https://messaging.twilio.com/v1/Sessions/${session_sid}/Participants`, {
+          method: 'POST',
+          auth: { user: config.twilio.apiKey, password: config.twilio.apiSecret },
+          form: {
+            Identity: options.identity
+          }
+        })
+      }
+    }
+  }
+}
 
 let me = "Tack tackleton";
 

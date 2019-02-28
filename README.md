@@ -38,8 +38,6 @@ Run `npm start`. This will automatically start two processes:
 
 Log in with a random identity string like `testfelix`. You'll know everything is working if the text "You are connected." appears on the top right.
 
-[[https://code.hq.twilio.com/ajtack/sessions-demo/blob/master/Quickstart\ Logged\ In.png|alt=Logged in.]]
-
 ### Add a Chat Participant
 
 Using the Sessions [Participants REST API](https://www.twilio.com/docs/sms/conversational-messaging-sessions/the-sessionsparticipants-resource), create a new Chat participant by passing the `Identity=` parameter on the same session you'd created before.

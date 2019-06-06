@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Chat.css';
-import { isUndefined } from 'util';
+import MessageBubble from './MessageBubble'
 
 class ChatChannel extends Component {
   constructor(props) {
@@ -81,30 +81,6 @@ class ChatChannel extends Component {
     this.setState({ newMessage: '' });
     this.state.channelProxy.sendMessage(message);
   };
-
-  incomingMessage = (m) => (
-    <li key={m.index} className="received_msg">
-        <div className="received_withd_msg">
-                <p>
-                    <strong>{m.author}</strong><br />
-                    {m.body}
-                </p>
-                <span className="time_date">{m.timestamp.toLocaleString()}</span>
-        </div>
-    </li>
-  );
-
-  outgoingMessage = (m) => (
-    <li key={m.index} className="outgoing_msg">
-        <div className="sent_msg">
-                <p>
-                    <strong>{m.author}</strong><br />
-                    {m.body}
-                </p>
-                <span className="time_date">{m.timestamp.toLocaleString()}</span>
-        </div>
-    </li>
-  ); 
   
   render = () => {
     return (
@@ -112,9 +88,9 @@ class ChatChannel extends Component {
             <ul id="messages">
                 { this.state.messages.map(m => {
                     if (m.author === this.props.myIdentity)
-                        return this.outgoingMessage(m);
+                        return <MessageBubble key={m.index} direction="outgoing" message={m} />
                     else
-                        return this.incomingMessage(m);
+                        return <MessageBubble key={m.index} direction="incoming" message={m} />
                   })
                 }
             </ul>

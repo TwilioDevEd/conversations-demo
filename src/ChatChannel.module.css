@@ -1,0 +1,30 @@
+.Dropzone {
+    position: absolute;
+    width: 90%;
+    margin: auto;
+    height: 5em;
+    background-color: #fff;
+    border: 2px dashed grey;
+    border-radius: 2em;
+    opacity: 0.3;
+    visibility: visible;
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    line-height: 5em;
+}
+
+.Dropzone p {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+}
+
+.Highlight {
+    border: 5px dashed green;
+}
+
+input#type-a-message {
+    display: inline-block;
+    width: 500px;
+}

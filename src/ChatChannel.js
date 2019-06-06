@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './Chat.css';
 import MessageBubble from './MessageBubble'
+import Dropzone from 'react-dropzone';
+import styles from './ChatChannel.module.css'
 
 class ChatChannel extends Component {
   constructor(props) {
@@ -81,6 +83,11 @@ class ChatChannel extends Component {
     this.setState({ newMessage: '' });
     this.state.channelProxy.sendMessage(message);
   };
+
+  onDrop = acceptedFiles => {
+      console.log(acceptedFiles);
+    this.state.channelProxy.sendMessage({contentType: acceptedFiles[0].type, media: acceptedFiles[0]});
+  };
   
   render = () => {
     return (
@@ -99,13 +106,22 @@ class ChatChannel extends Component {
                 <input
                     type="text"
                     name="message"
-                    id="message"
+                    id={styles['type-a-message']}
+                    autocomplete="off"
                     disabled={this.state.loadingState !== 'ready'}
                     onChange={this.onMessageChanged}
                     value={this.state.newMessage}
                 />
                 <button>Send</button>
             </form>
+            <Dropzone onDrop={this.onDrop} accept="image/*">
+                {({getRootProps, getInputProps, isDragActive}) => (
+                    <div {...getRootProps()} className={`${styles.Dropzone} ${isDragActive? styles.Highlight : ''}`}>
+                        <input id="files" {...getInputProps()} />
+                        <p>Drag Files Here</p>
+                    </div>
+                )}
+            </Dropzone>
         </div>
     );
   }

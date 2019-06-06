@@ -27,30 +27,6 @@ app.listen(config.port, () => {
   console.log(`Application started at localhost:${config.port}`);
 });
 
-const request = require('request-promise');
-console.log(twilio);
-let client = {};
-client.Sessions = (session_sid) => {
-  console.log("A");
-  return {
-    Participants: {
-      add: (options) => {
-        console.log(`Adding ${options.identity}…`);
-        return request(`https://messaging.twilio.com/v1/Sessions/${session_sid}/Participants`, {
-          method: 'POST',
-          auth: { user: config.twilio.apiKey, password: config.twilio.apiSecret },
-          form: {
-            Identity: options.identity
-          }
-        })
-      }
-    }
-  }
-}
-
-let me = "Tack tackleton";
-
-
 
 // ============================================
 // ============================================
@@ -58,20 +34,20 @@ let me = "Tack tackleton";
 // ============================================
 // ============================================
 app.post('/chat', (req, res) => {
-  console.log("Received a webhook:", req.body.EventType);
-  if (req.body.EventType === 'onSessionAdded') {
-    client
-      .Sessions(req.body.SessionSid)
-      .Participants.add({identity: me})
-      
-      .then(result => console.log(`Added '${me}' to ${req.body.SessionSid}.`))
+  console.log("Received a webhook:", req.body);
+  if (req.body.EventType === 'onSessionAdded' && req.body.CreatedBy != '+37258821796' && !req.body.CreatedBy != 'whatsapp:+13602484847') {
+    let client = new twilio(config.twilio.accountSid, config.twilio.authToken); 
+    client.messaging.sessions(req.body.SessionSid)
+      .participants
+      .create({
+          identity: "Andres"
+        })
+      .then(participant => console.log(`Added 'Andres' to ${req.body.SessionSid}.`))
       .catch(err => console.error(`Failed to add a member to ${req.body.SessionSid}!`, err));
+  } else {
+    console.log("(ignored!)");
   }
 });
-
-
-
-
 
 
 var ngrokOptions = {
@@ -85,4 +61,4 @@ if (config.ngrokSubdomain) {
 
 ngrok.connect(ngrokOptions).then(url => {
   console.log('ngrok url is ' + url);
-});
+}).catch(console.error);

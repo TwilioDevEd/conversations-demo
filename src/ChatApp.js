@@ -101,7 +101,7 @@ class ChatApp extends React.Component {
           <div>
             <Router>
               <div className="row">
-                <div id="Channels" className="col-sm">
+                <div id="Channels" className="col-sm-4">
                   <h3>Open Sessions</h3>
                   { this.state.channels.map(channel => (
                         <NavLink key={channel.sid}

@@ -8,7 +8,7 @@
     vertical-align: top;
     width: 92%;
 }
-.received_withd_msg p {
+.received_withd_msg > div {
     background: #ebebeb none repeat scroll 0 0;
     border-radius: 3px;
     color: #646464;
@@ -23,9 +23,9 @@
     font-size: 12px;
     margin: 8px 0 0;
 }
-.received_withd_msg { width: 57%;}
+.received_withd_msg { width: 75%;}
 
-.sent_msg p {
+.sent_msg > div {
     background: #05728f none repeat scroll 0 0;
     border-radius: 3px;
     font-size: 14px;
@@ -37,7 +37,7 @@
 .sent_msg {
     display: inline-block;
     float: right;
-    width: 46%;
+    width: 70%;
 }
 .input_msg_write input {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
@@ -46,4 +46,10 @@
     font-size: 15px;
     min-height: 48px;
     width: 100%;
+}
+
+.image {
+    height: 100%;
+    width: 100%;
+    object-fit: scale-down;
 }

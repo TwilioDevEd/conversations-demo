@@ -21,7 +21,6 @@ class ChatChannel extends Component {
         thisChannel.getMessages()
             .then(messagePaginator => {
                 if (this.state.channelProxy === thisChannel) {
-                    console.log("Messages loaded!!!");
                     this.setState({ messages: messagePaginator.items, loadingState: 'ready' });
                 }
             })
@@ -58,7 +57,6 @@ class ChatChannel extends Component {
 
   static getDerivedStateFromProps(newProps, oldState) {
     let logic = (oldState.loadingState === 'initializing') || oldState.channelProxy !== newProps.channelProxy;
-    console.log("xxx", oldState.channelProxy, newProps.channelProxy, logic);
     if (logic) {
       return { loadingState: 'loading messages', channelProxy: newProps.channelProxy };
     } else {
@@ -85,7 +83,6 @@ class ChatChannel extends Component {
   };
 
   onDrop = acceptedFiles => {
-      console.log(acceptedFiles);
     this.state.channelProxy.sendMessage({contentType: acceptedFiles[0].type, media: acceptedFiles[0]});
   };
   
@@ -107,7 +104,7 @@ class ChatChannel extends Component {
                     type="text"
                     name="message"
                     id={styles['type-a-message']}
-                    autocomplete="off"
+                    autoComplete="off"
                     disabled={this.state.loadingState !== 'ready'}
                     onChange={this.onMessageChanged}
                     value={this.state.newMessage}

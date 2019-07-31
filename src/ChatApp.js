@@ -70,7 +70,7 @@ class ChatApp extends React.Component {
 
   initChat = async () => {
     window.chatClient = ChatClient;
-    this.chatClient = await ChatClient.create(this.state.token, {logLevel: "info"});
+    this.chatClient = await ChatClient.create(this.state.token);
     this.setState({statusString: 'Connecting to Twilio…'});
 
     this.chatClient.on('connectionStateChanged', (state) => {
@@ -102,7 +102,7 @@ class ChatApp extends React.Component {
             <Router>
               <div className="row">
                 <div id="Channels" className="col-sm-4">
-                  <h3>Open Sessions</h3>
+                  <h3>Open Conversations</h3>
                   { this.state.channels.map(channel => (
                         <NavLink key={channel.sid}
                                  to={`/channels/${channel.sid}`}

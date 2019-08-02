@@ -1,7 +1,10 @@
 import React from 'react';
 import { List, Typography } from "antd";
-import { joinClassNames } from "./utils/class-name";
+
+import chatChannelsListStyles from "./assets/ChatChannelsList.module.scss";
 import chatChannelsItemStyles from "./assets/ChatChannelsItem.module.scss";
+
+import { joinClassNames } from "./utils/class-name";
 
 const { Text } = Typography;
 
@@ -11,10 +14,10 @@ export class ChannelsList extends React.Component {
 
         return (
             <List
-                bordered={true}
-                style={{ height: "100%", overflowY: 'scroll', overflowX: 'hidden' }}
-                loading={channels.length === 0}
                 header={"Open Conversations"}
+                className={chatChannelsListStyles['chat-channels-list']}
+                bordered={true}
+                loading={channels.length === 0}
                 dataSource={channels}
                 renderItem={item => {
                     const activeChannel = item.sid === selectedChannelSid;

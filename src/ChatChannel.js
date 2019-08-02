@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Chat.css';
 import MessageBubble from './MessageBubble'
 import Dropzone from 'react-dropzone';
-import styles from './ChatChannel.module.css'
+import styles from './assets/ChatChannel.module.css'
 import {Button, Form, Input} from "antd";
 import ChatMessages from "./ChatMessages";
 import PropTypes from "prop-types";

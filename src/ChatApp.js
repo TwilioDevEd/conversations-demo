@@ -3,6 +3,7 @@ import { Layout, Menu } from "antd";
 import { Client as ChatClient } from 'twilio-chat';
 
 import './Chat.css';
+import './assets/ChatChannelSection.scss';
 
 import ChatChannel from './ChatChannel';
 import LoginPage from "./LoginPage";
@@ -124,7 +125,7 @@ class ChatApp extends React.Component {
                             />
                         </Sider>
                         <Content>
-                            <Layout style={{ height: "100%" }}>
+                            <Layout className="chat-channel-section">
                                 <Header>
                                     <Menu
                                         theme="dark"

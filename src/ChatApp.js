@@ -28,7 +28,6 @@ class ChatApp extends React.Component {
       selectedChannelSid: null,
       newMessage: ''
     };
-    this.channelName = 'general';
   }
 
   componentWillMount = () => {
@@ -49,6 +48,7 @@ class ChatApp extends React.Component {
     if (event) {
       event.preventDefault();
     }
+
     this.setState({
       name: '',
       loggedIn: false,
@@ -58,9 +58,9 @@ class ChatApp extends React.Component {
       newMessage: '',
       channels: []
     });
+
     localStorage.removeItem('name');
     this.chatClient.shutdown();
-    this.channel = null;
   };
 
   getToken = () => {
@@ -91,10 +91,6 @@ class ChatApp extends React.Component {
     this.chatClient.on('channelLeft', thisChannel => {
       this.setState({channels: [...this.state.channels.filter(it => it !== thisChannel)]});
     })
-  };
-
-  messagesLoaded = messagePage => {
-    this.setState({ messages: messagePage.items });
   };
 
     render() {

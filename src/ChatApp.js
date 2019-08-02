@@ -3,7 +3,7 @@ import {Client as ChatClient} from 'twilio-chat';
 import ChatChannel from './ChatChannel';
 import './Chat.css';
 import { BrowserRouter as Router, NavLink, Route, Redirect } from 'react-router-dom';
-import { LoginPage } from "./LoginPage";
+import LoginPage from "./LoginPage";
 
 class ChatApp extends React.Component {
   constructor(props) {

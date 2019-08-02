@@ -9,15 +9,7 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <div className="App">
-        <header>
-          <h1>The Ajťák Personal Shopping Studio</h1>
-          <h2>Powered by Twilio Conversations</h2>
-        </header>
-        <ChatApp />
-      </div>
-    );
+    return <ChatApp />
   }
 }
 

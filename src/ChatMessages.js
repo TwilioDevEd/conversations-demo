@@ -5,15 +5,17 @@ import PropTypes from "prop-types";
 class ChatMessages extends PureComponent {
   render = () => {
     return (
-        <ul id="messages">
-          { this.props.messages.map(m => {
-            if (m.author === this.props.identity)
-              return <MessageBubble key={m.index} direction="outgoing" message={m} />;
-            else
-              return <MessageBubble key={m.index} direction="incoming" message={m} />;
-          })
-          }
-        </ul>
+        <div id="messages">
+          <ul>
+            { this.props.messages.map(m => {
+              if (m.author === this.props.identity)
+                return <MessageBubble key={m.index} direction="outgoing" message={m} />;
+              else
+                return <MessageBubble key={m.index} direction="incoming" message={m} />;
+            })
+            }
+          </ul>
+        </div>
     );
   }
 }

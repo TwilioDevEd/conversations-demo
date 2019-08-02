@@ -3,7 +3,7 @@ import './Chat.css';
 import MessageBubble from './MessageBubble'
 import Dropzone from 'react-dropzone';
 import styles from './assets/ChatChannel.module.css'
-import {Button, Form, Input} from "antd";
+import {Button, Form, Icon, Input} from "antd";
 import ChatMessages from "./ChatMessages";
 import PropTypes from "prop-types";
 
@@ -88,46 +88,66 @@ class ChatChannel extends Component {
   onDrop = acceptedFiles => {
     this.state.channelProxy.sendMessage({contentType: acceptedFiles[0].type, media: acceptedFiles[0]});
   };
-  
+
   render = () => {
     return (
-        <div id="OpenChannel">
-          <div style={{flexBasis: "80%", flexGrow: 2}}>
-            <ChatMessages
-                identity={this.props.myIdentity}
-                messages={this.state.messages}/>
-          </div>
-          <div style={{flexBasis: "5%"}}>
-            <Form onSubmit={this.sendMessage}>
-              <Input.Group compact={true} style={{width: "100%", display: "flex", flexDirection: "row"}}>
-              <Input
-                  style={{flexBasis: "100%"}}
-                placeholder={"Type your message here..."}
-                type={"text"}
-                name={"message"}
-                id={styles['type-a-message']}
-                autoComplete={"off"}
-                disabled={this.state.loadingState !== 'ready'}
-                onChange={this.onMessageChanged}
-                value={this.state.newMessage}
-              />
-                <Button icon="enter" htmlType="submit" type={"submit"}/>
-              </Input.Group>
-            </Form>
-          </div>
-          <div style={{flexBasis: "15%"}}>
-            <Dropzone
-                onDrop={this.onDrop}
-                accept="image/*">
-                {({getRootProps, getInputProps, isDragActive}) => (
-                    <div {...getRootProps()} className={`${styles.Dropzone} ${isDragActive? styles.Highlight : ''}`}>
-                        <input id="files" {...getInputProps()} />
-                        <p>Drag Files Here</p>
-                    </div>
-                )}
-            </Dropzone>
-          </div>
-        </div>
+        <Dropzone
+            onDrop={this.onDrop}
+            accept="image/*">
+          {({getRootProps, getInputProps, isDragActive}) => (
+              <div
+                  {...getRootProps()}
+                  onClick={() => {
+                  }}
+                  id="OpenChannel"
+                  style={{position: "relative", top: 0}}>
+
+                {isDragActive &&
+                <div className={styles.drop}>
+                  <Icon type={"cloud-upload"}
+                        style={{fontSize: "5em", color: "#fefefe"}}/>
+                  <h3 style={{color: "#fefefe"}}>Release to Upload</h3>
+                </div>
+                }
+                <div
+                    className={styles.messages}
+                    style={{
+                      filter: `blur(${isDragActive ? 4 : 0}px)`,
+                    }}
+                >
+                  <input id="files" {...getInputProps()} />
+                  <div style={{flexBasis: "100%", flexGrow: 2, flexShrink: 1, overflowY: "scroll"}}>
+                    <ChatMessages
+                        identity={this.props.myIdentity}
+                        messages={this.state.messages}/>
+                  </div>
+                  <div>
+                    <Form onSubmit={this.sendMessage}>
+                      <Input.Group compact={true} style={{
+                        width: "100%",
+                        display: "flex",
+                        flexDirection: "row"
+                      }}>
+                        <Input
+                            style={{flexBasis: "100%"}}
+                            placeholder={"Type your message here..."}
+                            type={"text"}
+                            name={"message"}
+                            id={styles['type-a-message']}
+                            autoComplete={"off"}
+                            disabled={this.state.loadingState !== 'ready'}
+                            onChange={this.onMessageChanged}
+                            value={this.state.newMessage}
+                        />
+                        <Button icon="enter" htmlType="submit" type={"submit"}/>
+                      </Input.Group>
+                    </Form>
+                  </div>
+                </div>
+              </div>
+          )}
+
+        </Dropzone>
     );
   }
 }

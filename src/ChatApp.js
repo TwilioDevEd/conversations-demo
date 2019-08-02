@@ -137,7 +137,7 @@ class ChatApp extends React.Component {
                         <Layout>
                             <Sider
                                 theme={"light"}
-                                width={350}
+                                width={150}
                             >
                                 <ChannelsList
                                     channels={channels}

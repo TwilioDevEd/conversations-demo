@@ -88,10 +88,11 @@ class Media extends PureComponent {
                         centered: true,
                         icon: null,
                         okText: "Close",
-                        width: "auto",
+                        width: "60%",
                         content: <div
-                            className={styles.picture_container}><img
-                            src={url}/></div>
+                            className={styles.picture_container}>
+                            <img style={{width: "100%", height: "100%"}} src={url}/>
+                        </div>
                     })
                 }}>
 

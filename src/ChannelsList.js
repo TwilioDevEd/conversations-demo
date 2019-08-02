@@ -14,7 +14,7 @@ export class ChannelsList extends React.Component {
 
         return (
             <List
-                header={"Conversations"}
+                header={"Open Conversations"}
                 className={chatChannelsListStyles['chat-channels-list']}
                 bordered={true}
                 loading={channels.length === 0}

@@ -113,7 +113,7 @@ class ChatApp extends React.Component {
                 <div className="chat-window-wrapper">
                     <Layout className="chat-window-container">
                         <Header style={{ display: 'flex', alignItems: 'center', padding: 0 }}>
-                            <div style={{ maxWidth: '350px', width: '100%', display: 'flex', alignItems: 'center' }}>
+                            <div style={{ maxWidth: '250px', width: '100%', display: 'flex', alignItems: 'center' }}>
                                 <div style={{ padding: '0 0 0 19px', display: 'flex' }}>
                                     <Logo/>
                                 </div>
@@ -143,7 +143,7 @@ class ChatApp extends React.Component {
                         <Layout>
                             <Sider
                                 theme={"light"}
-                                width={150}
+                                width={250}
                             >
                                 <ChannelsList
                                     channels={channels}

@@ -10,7 +10,20 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  monospace;
+}
+
+.hidden {
+  display: none;
+}
+
 #root {
+    height: 100vh;
+}
+
+.chat-window-wrapper {
   position: relative;
   max-width: 1268px;
   height: calc(100% - 16px);
@@ -18,9 +31,4 @@ body {
   flex-direction: column;
   justify-content: center;
   margin: 8px auto;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-  monospace;
 }

@@ -106,83 +106,80 @@ class ChatApp extends React.Component {
       channelContent = <h4>{this.state.statusString}</h4>
     }
 
-    if (this.state.loggedIn) {
-      loginOrChat = (
-          <div id="ChatWindow" className="container" style={{height: "100%"}}>
-            <Layout style={{height: "100%"}}>
-              <Content>
-                <Layout style={{height: "100%", background: "#fefefe"}}>
-                  <Sider
-                      theme={"light"}
-                      width={350}
-                  >
-                    <List
-                        bordered={true}
-                        style={{ height: "100%", overflowY: 'scroll', overflowX: 'hidden' }}
-                        loading={this.state.channels.length === 0}
-                        header={"Open Conversations"}
-                        dataSource={this.state.channels}
-                        renderItem={item => {
-                            const activeChannel = item.sid === selectedChannelSid;
-                            const channelItemClassName = joinClassNames([
-                                chatChannelsItemStyles['channel-item'],
-                              activeChannel && chatChannelsItemStyles['channel-item--active']
-                            ]);
+      if (this.state.loggedIn) {
+          loginOrChat = (
+              <div className="chat-window-wrapper">
+                  <div id="ChatWindow" style={{ height: "100%" }}>
+                      <Layout style={{ height: "100%" }}>
+                          <Content>
+                              <Layout style={{ height: "100%", background: "#fefefe" }}>
+                                  <Sider
+                                      theme={"light"}
+                                      width={350}
+                                  >
+                                      <List
+                                          bordered={true}
+                                          style={{ height: "100%", overflowY: 'scroll', overflowX: 'hidden' }}
+                                          loading={this.state.channels.length === 0}
+                                          header={"Open Conversations"}
+                                          dataSource={this.state.channels}
+                                          renderItem={item => {
+                                              const activeChannel = item.sid === selectedChannelSid;
+                                              const channelItemClassName = joinClassNames([
+                                                  chatChannelsItemStyles['channel-item'],
+                                                  activeChannel && chatChannelsItemStyles['channel-item--active']
+                                              ]);
 
-                            return (
-                                <List.Item
-                                    key={item.sid}
-                                    onClick={() => this.setState({ selectedChannelSid: item.sid })}
-                                    className={channelItemClassName}
-                                >
-                                    <Text
-                                        strong
-                                        className={chatChannelsItemStyles['channel-item-text']}
-                                    >
-                                        {item.friendlyName}
-                                    </Text>
-                                </List.Item>
-                            )
-                        }}
-                    />
-                  </Sider>
-
-                  <Content>
-                    <Layout style={{height: "100%"}}>
-                      <Header>
-                        <Menu
-                            theme="dark"
-                            mode="horizontal"
-                            style={{ lineHeight: '64px' }}
-                        >
-                          <Menu.Item key="1"
-                                     onClick={() => this.logOut()}
-                          >
-                            Log Out
-                          </Menu.Item>
-                        </Menu>
-                      </Header>
-                      <Content>
-                        <div id="SelectedChannel">
-                          {channelContent}
-                        </div>
-                      </Content>
-                    </Layout>
-                  </Content>
-                </Layout>
-              </Content>
-            </Layout>
-          </div>
+                                              return (
+                                                  <List.Item
+                                                      key={item.sid}
+                                                      onClick={() => this.setState({ selectedChannelSid: item.sid })}
+                                                      className={channelItemClassName}
+                                                  >
+                                                      <Text
+                                                          strong
+                                                          className={chatChannelsItemStyles['channel-item-text']}
+                                                      >
+                                                          {item.friendlyName}
+                                                      </Text>
+                                                  </List.Item>
+                                              )
+                                          }}
+                                      />
+                                  </Sider>
+                                  <Content>
+                                      <Layout style={{ height: "100%" }}>
+                                          <Header>
+                                              <Menu
+                                                  theme="dark"
+                                                  mode="horizontal"
+                                                  style={{ lineHeight: '64px' }}
+                                              >
+                                                  <Menu.Item key="1"
+                                                             onClick={() => this.logOut()}
+                                                  >
+                                                      Log Out
+                                                  </Menu.Item>
+                                              </Menu>
+                                          </Header>
+                                          <Content>
+                                              <div id="SelectedChannel">
+                                                  {channelContent}
+                                              </div>
+                                          </Content>
+                                      </Layout>
+                                  </Content>
+                              </Layout>
+                          </Content>
+                      </Layout>
+                  </div>
+              </div>
       );
     } else {
       loginOrChat = <LoginPage onSubmit={this.logIn}/>
     }
 
-    return (
-      <div style={{height: "100%"}}>
-        {loginOrChat}
-      </div>
-    );
+    return loginOrChat
   }
 }
 

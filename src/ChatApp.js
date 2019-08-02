@@ -9,6 +9,7 @@ import { ReactComponent as Logo } from './assets/twilio-mark-red.svg';
 import ChatChannel from './ChatChannel';
 import LoginPage from "./LoginPage";
 import { ChannelsList } from "./ChannelsList";
+import { HeaderItem } from "./HeaderItem";
 
 const { Content, Sider, Header } = Layout;
 const { Text } = Typography;
@@ -114,30 +115,32 @@ class ChatApp extends React.Component {
                     <Layout className="chat-window-container">
                         <Header style={{ display: 'flex', alignItems: 'center', padding: 0 }}>
                             <div style={{ maxWidth: '250px', width: '100%', display: 'flex', alignItems: 'center' }}>
-                                <div style={{ padding: '0 0 0 19px', display: 'flex' }}>
+                                <HeaderItem style={{ paddingRight: '0', display: 'flex' }}>
                                     <Logo/>
-                                </div>
-                                <Text strong style={{ color: 'white', padding: '0 19px 0 19px' }}>
-                                    Conversations
-                                </Text>
+                                </HeaderItem>
+                                <HeaderItem>
+                                    <Text strong style={{ color: 'white' }}>
+                                        Conversations
+                                    </Text>
+                                </HeaderItem>
                             </div>
                             <div style={{ display: 'flex', width: '100%' }}>
-                                <div style={{ padding: '0 19px 0 19px'}}>
+                                <HeaderItem>
                                     <Text strong style={{ color: 'white' }}>
                                         {selectedChannel && selectedChannel.friendlyName}
                                     </Text>
-                                </div>
-                              <div style={{ padding: '0 19px 0 19px', float: "right", marginLeft: 'auto' }}>
-                                <span style={{color: "white"}}>{` ${this.state.statusString}`}</span>
-                                <Badge dot={true} status={this.state.status} style={{marginLeft: "1em"}}/>
-                              </div>
-                                <div style={{ padding: '0 19px 0 19px'}}>
+                                </HeaderItem>
+                                <HeaderItem style={{ float: "right", marginLeft: 'auto' }}>
+                                    <span style={{ color: "white" }}>{` ${this.state.statusString}`}</span>
+                                    <Badge dot={true} status={this.state.status} style={{ marginLeft: "1em" }}/>
+                                </HeaderItem>
+                                <HeaderItem>
                                     <Icon
                                         type="poweroff"
                                         onClick={this.logOut}
                                         style={{ color: 'white', fontSize: '20px', marginLeft: 'auto' }}
                                     />
-                                </div>
+                                </HeaderItem>
                             </div>
                         </Header>
                         <Layout>

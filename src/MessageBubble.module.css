@@ -51,5 +51,64 @@
 .image {
     height: 100%;
     width: 100%;
-    object-fit: scale-down;
+    object-fit: cover;
+}
+
+.picture_preview {
+    width: 250px;
+    height: 250px;
+}
+
+.picture_preview {
+    transition-duration: 100ms;
+    transition-timing-function: ease-in-out;
+    filter: blur(2px);
+}
+
+.media_icon:hover .picture_preview {
+    filter: blur(0px);
+}
+
+.picture_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.media {
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 4px;
+    display: flex;
+    width: 220px;
+    height: 220px;
+    justify-content: center;
+    align-items: center;
+}
+
+.placeholder {
+    background: rgba(22, 46, 52, 0.58);
+}
+
+.medias {
+    display: flex;
+    justify-content: start;
+    align-content: center;
+    flex-flow: wrap;
+}
+
+.media_icon {
+    margin: 4px;
+    position: relative;
+    border-radius: 4px;
+    top: 0;
+    overflow: hidden;
+    height: 220px;
+    width: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    flex-basis: 220px;
+
 }

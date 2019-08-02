@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component, PureComponent} from 'react';
 import styles from './MessageBubble.module.css';
+import PropTypes from "prop-types";
+import {Spin, Modal, Icon} from "antd";
 
 class MessageBubble extends Component {
     constructor(props) {
@@ -22,6 +24,10 @@ class MessageBubble extends Component {
         document.getElementById(this.props.message.sid).scrollIntoView({behavior: "smooth"});
     };
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        document.getElementById(this.props.message.sid).scrollIntoView({behavior: "smooth"});
+    }
+
     render = () => {
         const {itemStyle, divStyle} = this.props.direction === "incoming"
                     ? {itemStyle: styles.received_msg,    divStyle: styles.received_withd_msg}
@@ -38,9 +44,10 @@ class MessageBubble extends Component {
             <div className={divStyle}>
                 <div>
                     <strong>{m.author}</strong><br />
+                    <div className={styles.medias}>
                     {this.state.hasMedia
-                      ? <Media hasFailed={this.state.mediaDownloadFailed} url={this.state.mediaUrl} />
-                      : null}
+                      && <Media hasFailed={this.state.mediaDownloadFailed} url={this.state.mediaUrl} />}
+                    </div>
                     {m.body}
                 </div>
                 <span className={styles.time_date}>{m.timestamp.toLocaleString()}</span>
@@ -49,13 +56,54 @@ class MessageBubble extends Component {
     }
 }
 
-function Media(props) {
-    if (props.hasFailed)
-        return <p>(Failed to download media!)</p>;
-    else if (props.url === null)
-        return <p>Downloading…</p>;
-    else
-        return <img className={styles.image} src={props.url} />;
+class Media extends PureComponent {
+    render = () => {
+        const { hasFailed, url } = this.props;
+        return (
+            <div
+                className={`${styles.media}${!url ? " " + styles.placeholder : ""}`}
+                onClick={() => {
+                    Modal.info({
+                        centered: true,
+                        icon: null,
+                        okText: "Close",
+                        width: "auto",
+                        content: <div
+                            className={styles.picture_container}><img
+                            src={url}/></div>
+                    })
+                }}>
+
+                {!url && !hasFailed && <Spin/>}
+
+                {hasFailed &&
+                    <div
+                        style={{display: "flex", flexDirection: "column"}}>
+                        <Icon type={"warning"} style={{fontSize: "5em"}}/>
+                        <p>Failed to load media</p>
+                    </div>
+                }
+
+                {!hasFailed && url &&
+                <div className={styles.media_icon}>
+                    <div style={{zIndex: 123, position: "absolute"}}>
+                        <Icon type={"eye"}
+                              style={{fontSize: "5em", opacity: 0.3}}/>
+                    </div>
+                    <div
+                        className={styles.picture_preview}
+                        style={{background: `url(${url})`, zIndex: 122}}>
+                    </div>
+                </div>
+                }
+            </div>
+        );
+    }
 }
+
+Media.propTypes = {
+    hasFailed: PropTypes.bool.isRequired,
+    url: PropTypes.string
+};
 
 export default MessageBubble;

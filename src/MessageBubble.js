@@ -19,7 +19,8 @@ class MessageBubble extends Component {
                 .then(url => {console.log("HUZZAA"); this.setState({ mediaUrl: url })})
                 .catch(e => this.setState({ mediaDownloadFailed: true }));
         }
-    }
+        document.getElementById(this.props.message.sid).scrollIntoView({behavior: "smooth"});
+    };
 
     render = () => {
         const {itemStyle, divStyle} = this.props.direction === "incoming"
@@ -33,7 +34,7 @@ class MessageBubble extends Component {
             console.log('Media properties', m.media);
           }
 
-        return <li className={itemStyle}>
+        return <li id={m.sid} className={itemStyle}>
             <div className={divStyle}>
                 <div>
                     <strong>{m.author}</strong><br />

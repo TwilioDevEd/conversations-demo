@@ -4,6 +4,8 @@ import MessageBubble from './MessageBubble'
 import Dropzone from 'react-dropzone';
 import styles from './ChatChannel.module.css'
 import {Button, Form, Input} from "antd";
+import ChatMessages from "./ChatMessages";
+import PropTypes from "prop-types";
 
 class ChatChannel extends Component {
   constructor(props) {
@@ -54,7 +56,7 @@ class ChatChannel extends Component {
             this.setState({boundChannels: new Set([...this.state.boundChannels, newChannel])});
         }
     }
-  }
+  };
 
   static getDerivedStateFromProps(newProps, oldState) {
     let logic = (oldState.loadingState === 'initializing') || oldState.channelProxy !== newProps.channelProxy;
@@ -90,16 +92,10 @@ class ChatChannel extends Component {
   render = () => {
     return (
         <div id="OpenChannel">
-          <div style={{flexBasis: "90%"}}>
-            <ul id="messages">
-                { this.state.messages.map(m => {
-                    if (m.author === this.props.myIdentity)
-                        return <MessageBubble key={m.index} direction="outgoing" message={m} />
-                    else
-                        return <MessageBubble key={m.index} direction="incoming" message={m} />
-                  })
-                }
-            </ul>
+          <div style={{flexBasis: "80%", flexGrow: 2}}>
+            <ChatMessages
+                identity={this.props.myIdentity}
+                messages={this.state.messages}/>
           </div>
           <div style={{flexBasis: "5%"}}>
             <Form onSubmit={this.sendMessage}>
@@ -119,7 +115,7 @@ class ChatChannel extends Component {
               </Input.Group>
             </Form>
           </div>
-          <div style={{flexBasis: "10%"}}>
+          <div style={{flexBasis: "15%"}}>
             <Dropzone
                 onDrop={this.onDrop}
                 accept="image/*">
@@ -135,5 +131,9 @@ class ChatChannel extends Component {
     );
   }
 }
+
+ChatChannel.propTypes = {
+  myIdentity: PropTypes.string.isRequired
+};
 
 export default ChatChannel;

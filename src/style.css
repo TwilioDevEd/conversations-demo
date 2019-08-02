@@ -24,11 +24,16 @@ code {
 }
 
 .chat-window-wrapper {
+  height: inherit;
+  background-color: #f0f2f5;
+}
+
+.chat-window-container {
   position: relative;
   max-width: 1268px;
   height: calc(100% - 16px);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 8px auto;
+  margin: 0 auto 8px auto;
 }

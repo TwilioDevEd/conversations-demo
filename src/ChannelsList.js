@@ -1,7 +1,7 @@
 import React from 'react';
 import { List, Typography } from "antd";
 import { joinClassNames } from "./utils/class-name";
-import chatChannelsItemStyles from "./ChatChannelsItem.module.scss";
+import chatChannelsItemStyles from "./assets/ChatChannelsItem.module.scss";
 
 const { Text } = Typography;
 

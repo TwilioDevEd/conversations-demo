@@ -1,8 +1,10 @@
 import React from 'react';
 import { Layout, Menu } from "antd";
 import { Client as ChatClient } from 'twilio-chat';
-import ChatChannel from './ChatChannel';
+
 import './Chat.css';
+
+import ChatChannel from './ChatChannel';
 import LoginPage from "./LoginPage";
 import { ChannelsList } from "./ChannelsList";
 
@@ -92,71 +94,65 @@ class ChatApp extends React.Component {
     this.setState({ messages: messagePage.items });
   };
 
-  render() {
-    let loginOrChat;
-    const { channels, selectedChannelSid } = this.state;
-    const selectedChannel = channels.find(it => it.sid === selectedChannelSid);
+    render() {
+        const { channels, selectedChannelSid } = this.state;
+        const selectedChannel = channels.find(it => it.sid === selectedChannelSid);
 
-    let channelContent;
-    if (selectedChannel) {
-      channelContent = <ChatChannel channelProxy={selectedChannel} myIdentity={this.state.name}/>;
-    } else {
-      channelContent = <h4>{this.state.statusString}</h4>
+        let channelContent;
+        if (selectedChannel) {
+            channelContent = <ChatChannel channelProxy={selectedChannel} myIdentity={this.state.name}/>;
+        } else {
+            channelContent = <h4>{this.state.statusString}</h4>
+        }
+
+        if (this.state.loggedIn) {
+            return (
+                <div className="chat-window-wrapper">
+                    <Layout className="chat-window-container">
+                        <Sider
+                            theme={"light"}
+                            width={350}
+                        >
+                            <ChannelsList
+                                channels={channels}
+                                selectedChannelSid={selectedChannelSid}
+                                onChannelClick={(item) => {
+                                    this.setState({ selectedChannelSid: item.sid })
+                                }}
+                            />
+                        </Sider>
+                        <Content>
+                            <Layout style={{ height: "100%" }}>
+                                <Header>
+                                    <Menu
+                                        theme="dark"
+                                        mode="horizontal"
+                                        style={{ lineHeight: '64px' }}
+                                    >
+                                        <Menu.Item
+                                            key="1"
+                                            onClick={() => this.logOut()}
+                                        >
+                                            Log Out
+                                        </Menu.Item>
+                                    </Menu>
+                                </Header>
+                                <Content
+                                    style={{ backgroundColor: 'white' }}
+                                >
+                                    <div id="SelectedChannel">
+                                        {channelContent}
+                                    </div>
+                                </Content>
+                            </Layout>
+                        </Content>
+                    </Layout>
+                </div>
+            );
+        }
+
+        return <LoginPage onSubmit={this.logIn}/>
     }
-
-      if (this.state.loggedIn) {
-          loginOrChat = (
-              <div className="chat-window-wrapper">
-                  <div id="ChatWindow" style={{ height: "100%" }}>
-                      <Layout style={{ height: "100%" }}>
-                          <Content>
-                              <Layout style={{ height: "100%", background: "#fefefe" }}>
-                                  <Sider
-                                      theme={"light"}
-                                      width={350}
-                                  >
-                                      <ChannelsList
-                                          channels={channels}
-                                          selectedChannelSid={selectedChannelSid}
-                                          onChannelClick={(item) => {
-                                              this.setState({ selectedChannelSid: item.sid })
-                                          }}
-                                      />
-                                  </Sider>
-                                  <Content>
-                                      <Layout style={{ height: "100%" }}>
-                                          <Header>
-                                              <Menu
-                                                  theme="dark"
-                                                  mode="horizontal"
-                                                  style={{ lineHeight: '64px' }}
-                                              >
-                                                  <Menu.Item key="1"
-                                                             onClick={() => this.logOut()}
-                                                  >
-                                                      Log Out
-                                                  </Menu.Item>
-                                              </Menu>
-                                          </Header>
-                                          <Content>
-                                              <div id="SelectedChannel">
-                                                  {channelContent}
-                                              </div>
-                                          </Content>
-                                      </Layout>
-                                  </Content>
-                              </Layout>
-                          </Content>
-                      </Layout>
-                  </div>
-              </div>
-      );
-    } else {
-      loginOrChat = <LoginPage onSubmit={this.logIn}/>
-    }
-
-    return loginOrChat
-  }
 }
 
 export default ChatApp;

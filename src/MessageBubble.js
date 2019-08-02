@@ -2,6 +2,8 @@ import React, {Component, PureComponent} from 'react';
 import styles from './MessageBubble.module.css';
 import PropTypes from "prop-types";
 import {Spin, Modal, Icon} from "antd";
+import WhatsappIcon from "./WhatsappIcon";
+import ChatIcon from "./ChatIcon";
 
 class MessageBubble extends Component {
     constructor(props) {
@@ -14,7 +16,11 @@ class MessageBubble extends Component {
         }
     }
 
-    componentDidMount = () => {
+    componentDidMount = async () => {
+        this.setState({
+            ...this.state,
+            type: (await this.props.message.getMember()).type
+        });
         if (this.state.hasMedia) {
             console.log("Getting URL?!");
             this.props.message.media.getContentUrl()
@@ -34,6 +40,8 @@ class MessageBubble extends Component {
                     : {itemStyle: styles.outgoing_msg, divStyle: styles.sent_msg          }; 
         
         const m = this.props.message;
+        const type = this.state.type;
+
         if (this.state.hasMedia) {
             console.log('Message is media message');
             // log media properties
@@ -43,7 +51,20 @@ class MessageBubble extends Component {
         return <li id={m.sid} className={itemStyle}>
             <div className={divStyle}>
                 <div>
-                    <strong>{m.author}</strong><br />
+                    <strong>
+                        {type === "whatsapp" &&
+                            <Icon
+                                style={{fontSize: "16px"}}
+                                component={WhatsappIcon}/>
+                        }
+                        {type === "chat" &&
+                            <Icon style={{fontSize: "16px"}}
+                                  component={ChatIcon}/>}
+                        {type === "sms" && <Icon type={"mobile"}/>}
+                        {` ${m.author}`}
+                    </strong>
+
+                    <br />
                     <div className={styles.medias}>
                     {this.state.hasMedia
                       && <Media hasFailed={this.state.mediaDownloadFailed} url={this.state.mediaUrl} />}

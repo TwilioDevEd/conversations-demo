@@ -1,14 +1,12 @@
 import React from 'react';
-import { Layout, List, Menu, Typography } from "antd";
+import { Layout, Menu } from "antd";
 import { Client as ChatClient } from 'twilio-chat';
 import ChatChannel from './ChatChannel';
-import chatChannelsItemStyles from './ChatChannelsItem.module.scss';
 import './Chat.css';
 import LoginPage from "./LoginPage";
-import { joinClassNames } from "./utils/class-name";
+import { ChannelsList } from "./ChannelsList";
 
 const { Content, Sider, Header } = Layout;
-const { Text } = Typography;
 
 class ChatApp extends React.Component {
   constructor(props) {
@@ -117,33 +115,11 @@ class ChatApp extends React.Component {
                                       theme={"light"}
                                       width={350}
                                   >
-                                      <List
-                                          bordered={true}
-                                          style={{ height: "100%", overflowY: 'scroll', overflowX: 'hidden' }}
-                                          loading={this.state.channels.length === 0}
-                                          header={"Open Conversations"}
-                                          dataSource={this.state.channels}
-                                          renderItem={item => {
-                                              const activeChannel = item.sid === selectedChannelSid;
-                                              const channelItemClassName = joinClassNames([
-                                                  chatChannelsItemStyles['channel-item'],
-                                                  activeChannel && chatChannelsItemStyles['channel-item--active']
-                                              ]);
-
-                                              return (
-                                                  <List.Item
-                                                      key={item.sid}
-                                                      onClick={() => this.setState({ selectedChannelSid: item.sid })}
-                                                      className={channelItemClassName}
-                                                  >
-                                                      <Text
-                                                          strong
-                                                          className={chatChannelsItemStyles['channel-item-text']}
-                                                      >
-                                                          {item.friendlyName}
-                                                      </Text>
-                                                  </List.Item>
-                                              )
+                                      <ChannelsList
+                                          channels={channels}
+                                          selectedChannelSid={selectedChannelSid}
+                                          onChannelClick={(item) => {
+                                              this.setState({ selectedChannelSid: item.sid })
                                           }}
                                       />
                                   </Sider>

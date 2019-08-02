@@ -1,7 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { Layout, List, Menu, Typography } from "antd";
-import {Client as ChatClient} from 'twilio-chat';
+import { Client as ChatClient } from 'twilio-chat';
 import ChatChannel from './ChatChannel';
 import chatChannelsItemStyles from './ChatChannelsItem.module.scss';
 import './Chat.css';
@@ -119,7 +118,7 @@ class ChatApp extends React.Component {
                   >
                     <List
                         bordered={true}
-                        style={{ height: "100%" }}
+                        style={{ height: "100%", overflowY: 'scroll', overflowX: 'hidden' }}
                         loading={this.state.channels.length === 0}
                         header={"Open Conversations"}
                         dataSource={this.state.channels}

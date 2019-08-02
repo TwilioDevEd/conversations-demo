@@ -112,43 +112,39 @@ class ChatApp extends React.Component {
             return (
                 <div className="chat-window-wrapper">
                     <Layout className="chat-window-container">
-                        <Sider
-                            theme={"light"}
-                            width={350}
-                        >
-                            <ChannelsList
-                                channels={channels}
-                                selectedChannelSid={selectedChannelSid}
-                                onChannelClick={(item) => {
-                                    this.setState({ selectedChannelSid: item.sid })
-                                }}
-                            />
-                        </Sider>
-                        <Content>
-                            <Layout className="chat-channel-section">
-                                <Header>
-                                    <Menu
-                                        theme="dark"
-                                        mode="horizontal"
-                                        style={{ lineHeight: '64px' }}
-                                    >
-                                        <Menu.Item
-                                            key="1"
-                                            onClick={() => this.logOut()}
-                                        >
-                                            Log Out
-                                        </Menu.Item>
-                                    </Menu>
-                                </Header>
-                                <Content
-                                    style={{ backgroundColor: 'white' }}
+                        <Header>
+                            <Menu
+                                theme="dark"
+                                mode="horizontal"
+                                style={{ lineHeight: '64px' }}
+                            >
+                                <Menu.Item
+                                    key="1"
+                                    onClick={() => this.logOut()}
                                 >
-                                    <div id="SelectedChannel">
-                                        {channelContent}
-                                    </div>
-                                </Content>
-                            </Layout>
-                        </Content>
+                                    Log Out
+                                </Menu.Item>
+                            </Menu>
+                        </Header>
+                        <Layout>
+                            <Sider
+                                theme={"light"}
+                                width={350}
+                            >
+                                <ChannelsList
+                                    channels={channels}
+                                    selectedChannelSid={selectedChannelSid}
+                                    onChannelClick={(item) => {
+                                        this.setState({ selectedChannelSid: item.sid })
+                                    }}
+                                />
+                            </Sider>
+                            <Content className="chat-channel-section">
+                                <div id="SelectedChannel">
+                                    {channelContent}
+                                </div>
+                            </Content>
+                        </Layout>
                     </Layout>
                 </div>
             );

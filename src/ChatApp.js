@@ -120,6 +120,11 @@ class ChatApp extends React.Component {
                                 </Text>
                             </div>
                             <div style={{ display: 'flex', width: '100%' }}>
+                                <div style={{ padding: '0 19px 0 19px'}}>
+                                    <Text strong style={{ color: 'white' }}>
+                                        {selectedChannel && selectedChannel.friendlyName}
+                                    </Text>
+                                </div>
                                 <div style={{ padding: '0 19px 0 19px', marginLeft: 'auto' }}>
                                     <Icon
                                         type="poweroff"

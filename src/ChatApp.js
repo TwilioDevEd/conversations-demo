@@ -13,8 +13,10 @@ const { Content, Sider, Header } = Layout;
 class ChatApp extends React.Component {
   constructor(props) {
     super(props);
+
     const name = localStorage.getItem('name') || '';
     const loggedIn = name !== '';
+
     this.state = {
       name,
       loggedIn,
@@ -37,7 +39,7 @@ class ChatApp extends React.Component {
 
   logIn = (name) => {
     if (name !== '') {
-      localStorage.setItem('name', this.state.name);
+      localStorage.setItem('name', name);
       this.setState({ name, loggedIn: true }, this.getToken);
     }
   };

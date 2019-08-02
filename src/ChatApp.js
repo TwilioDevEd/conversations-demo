@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Layout, Typography } from "antd";
+import {Badge, Icon, Layout, Spin, Typography} from "antd";
 import { Client as ChatClient } from 'twilio-chat';
 
 import './Chat.css';
@@ -81,11 +81,11 @@ class ChatApp extends React.Component {
     this.setState({statusString: 'Connecting to Twilio…'});
 
     this.chatClient.on('connectionStateChanged', (state) => {
-      if (state === 'connecting') this.setState({statusString: 'Connecting to Twilio…'});
-      if (state === 'connected') { this.setState({statusString: 'You are connected.'}) }
-      if (state === 'disconnecting') this.setState({statusString: 'Disconnecting from Twilio…', chatReady: false});
-      if (state === 'disconnected') this.setState({statusString: 'Disconnected.', chatReady: false});
-      if (state === 'denied') this.setState({statusString: 'Failed to connect.', chatReady: false});
+      if (state === 'connecting') this.setState({statusString: 'Connecting to Twilio…', status: "default"});
+      if (state === 'connected') { this.setState({statusString: 'You are connected.', status: "success"}) }
+      if (state === 'disconnecting') this.setState({statusString: 'Disconnecting from Twilio…', chatReady: false, status: "default"});
+      if (state === 'disconnected') this.setState({statusString: 'Disconnected.', chatReady: false, status: "warning"});
+      if (state === 'denied') this.setState({statusString: 'Failed to connect.', chatReady: false, status: "error"});
     });
     this.chatClient.on('channelJoined', channel => {
       this.setState({channels: [...this.state.channels, channel]})
@@ -96,14 +96,16 @@ class ChatApp extends React.Component {
   };
 
     render() {
-        const { channels, selectedChannelSid } = this.state;
+        const { channels, selectedChannelSid, status } = this.state;
         const selectedChannel = channels.find(it => it.sid === selectedChannelSid);
 
         let channelContent;
         if (selectedChannel) {
             channelContent = <ChatChannel channelProxy={selectedChannel} myIdentity={this.state.name}/>;
+        } else if (status !== "success") {
+            channelContent = "Loading your chat!"
         } else {
-            channelContent = <h4>{this.state.statusString}</h4>
+            channelContent = "";
         }
 
         if (this.state.loggedIn) {
@@ -125,7 +127,11 @@ class ChatApp extends React.Component {
                                         {selectedChannel && selectedChannel.friendlyName}
                                     </Text>
                                 </div>
-                                <div style={{ padding: '0 19px 0 19px', marginLeft: 'auto' }}>
+                              <div style={{ padding: '0 19px 0 19px', float: "right", marginLeft: 'auto' }}>
+                                <span style={{color: "white"}}>{` ${this.state.statusString}`}</span>
+                                <Badge dot={true} status={this.state.status} style={{marginLeft: "1em"}}/>
+                              </div>
+                                <div style={{ padding: '0 19px 0 19px'}}>
                                     <Icon
                                         type="poweroff"
                                         onClick={this.logOut}

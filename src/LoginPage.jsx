@@ -1,9 +1,8 @@
 import React from 'react';
-import { Layout, Button, Input, Icon, Form, Row, Col, Card, Typography } from 'antd';
+import { Layout, Button, Input, Icon, Form, Row, Col, Card } from 'antd';
 import { ReactComponent as Logo } from './twilio-mark-red.svg';
 
 const { Content } = Layout;
-const { Text } = Typography;
 
 export class LoginPage extends React.Component {
     handleSubmit = e => {
@@ -36,9 +35,6 @@ export class LoginPage extends React.Component {
                                     <Logo/>
                                 </Row>
 
-                                {/*<Row type="flex" justify="center" align="middle">*/}
-                                {/*    <Text strong>Sign In</Text>*/}
-                                {/*</Row>*/}
                                 <Form onSubmit={this.handleSubmit}>
                                     <Form.Item>
                                         {usernameFieldDecorator(

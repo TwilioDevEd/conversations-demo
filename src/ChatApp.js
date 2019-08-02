@@ -1,9 +1,9 @@
 import React from 'react';
-import NameBox from './NameBox.js';
 import {Client as ChatClient} from 'twilio-chat';
 import ChatChannel from './ChatChannel';
 import './Chat.css';
 import { BrowserRouter as Router, NavLink, Route, Redirect } from 'react-router-dom';
+import LoginPage from "./LoginPage";
 
 class ChatApp extends React.Component {
   constructor(props) {
@@ -30,15 +30,10 @@ class ChatApp extends React.Component {
     }
   };
 
-  onNameChanged = event => {
-    this.setState({ name: event.target.value });
-  };
-
-  logIn = event => {
-    event.preventDefault();
-    if (this.state.name !== '') {
+  logIn = (name) => {
+    if (name !== '') {
       localStorage.setItem('name', this.state.name);
-      this.setState({ loggedIn: true }, this.getToken);
+      this.setState({ name, loggedIn: true }, this.getToken);
     }
   };
 
@@ -94,7 +89,7 @@ class ChatApp extends React.Component {
 
   render() {
     var loginOrChat;
-    
+
     if (this.state.loggedIn) {
       loginOrChat = (
         <div id="ChatWindow" className="container">
@@ -112,14 +107,14 @@ class ChatApp extends React.Component {
                         </NavLink>
                   ))}
                 </div>
-              
+
                 <div id="SelectedChannel" className="col-lg">
                   <Route path="/channels/:selected_channel" render={({match}) => {
                     let selectedChannelSid = match.params.selected_channel;
                     let selectedChannel = this.state.channels.find(it => it.sid === selectedChannelSid);
                     if (selectedChannel)
                       return (
-                        <ChatChannel channelProxy={selectedChannel} 
+                        <ChatChannel channelProxy={selectedChannel}
                                     myIdentity={this.state.name} />
                       );
                     else
@@ -140,15 +135,7 @@ class ChatApp extends React.Component {
         </div>
       );
     } else {
-      loginOrChat = (
-        <div>
-          <NameBox
-            name={this.state.name}
-            onNameChanged={this.onNameChanged}
-            logIn={this.logIn}
-          />
-        </div>
-      );
+      loginOrChat = <LoginPage onSubmit={this.logIn}/>
     }
 
     return (

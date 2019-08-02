@@ -1,15 +1,17 @@
 import React from 'react';
-import { Layout, Menu } from "antd";
+import { Icon, Layout, Typography } from "antd";
 import { Client as ChatClient } from 'twilio-chat';
 
 import './Chat.css';
 import './assets/ChatChannelSection.scss';
+import { ReactComponent as Logo } from './assets/twilio-mark-red.svg';
 
 import ChatChannel from './ChatChannel';
 import LoginPage from "./LoginPage";
 import { ChannelsList } from "./ChannelsList";
 
 const { Content, Sider, Header } = Layout;
+const { Text } = Typography;
 
 class ChatApp extends React.Component {
   constructor(props) {
@@ -108,19 +110,24 @@ class ChatApp extends React.Component {
             return (
                 <div className="chat-window-wrapper">
                     <Layout className="chat-window-container">
-                        <Header>
-                            <Menu
-                                theme="dark"
-                                mode="horizontal"
-                                style={{ lineHeight: '64px' }}
-                            >
-                                <Menu.Item
-                                    key="1"
-                                    onClick={() => this.logOut()}
-                                >
-                                    Log Out
-                                </Menu.Item>
-                            </Menu>
+                        <Header style={{ display: 'flex', alignItems: 'center', padding: 0 }}>
+                            <div style={{ maxWidth: '350px', width: '100%', display: 'flex', alignItems: 'center' }}>
+                                <div style={{ padding: '0 0 0 19px', display: 'flex' }}>
+                                    <Logo/>
+                                </div>
+                                <Text strong style={{ color: 'white', padding: '0 19px 0 19px' }}>
+                                    Conversations
+                                </Text>
+                            </div>
+                            <div style={{ display: 'flex', width: '100%' }}>
+                                <div style={{ padding: '0 19px 0 19px', marginLeft: 'auto' }}>
+                                    <Icon
+                                        type="poweroff"
+                                        onClick={this.logOut}
+                                        style={{ color: 'white', fontSize: '20px', marginLeft: 'auto' }}
+                                    />
+                                </div>
+                            </div>
                         </Header>
                         <Layout>
                             <Sider

@@ -3,6 +3,7 @@ import './Chat.css';
 import MessageBubble from './MessageBubble'
 import Dropzone from 'react-dropzone';
 import styles from './ChatChannel.module.css'
+import {Button, Form, Input} from "antd";
 
 class ChatChannel extends Component {
   constructor(props) {
@@ -89,6 +90,7 @@ class ChatChannel extends Component {
   render = () => {
     return (
         <div id="OpenChannel">
+          <div style={{flexBasis: "90%"}}>
             <ul id="messages">
                 { this.state.messages.map(m => {
                     if (m.author === this.props.myIdentity)
@@ -98,20 +100,29 @@ class ChatChannel extends Component {
                   })
                 }
             </ul>
-            <form onSubmit={this.sendMessage}>
-                <label htmlFor="message">Message: </label>
-                <input
-                    type="text"
-                    name="message"
-                    id={styles['type-a-message']}
-                    autoComplete="off"
-                    disabled={this.state.loadingState !== 'ready'}
-                    onChange={this.onMessageChanged}
-                    value={this.state.newMessage}
-                />
-                <button>Send</button>
-            </form>
-            <Dropzone onDrop={this.onDrop} accept="image/*">
+          </div>
+          <div style={{flexBasis: "5%"}}>
+            <Form onSubmit={this.sendMessage}>
+              <Input.Group compact={true} style={{width: "100%", display: "flex", flexDirection: "row"}}>
+              <Input
+                  style={{flexBasis: "100%"}}
+                placeholder={"Type your message here..."}
+                type={"text"}
+                name={"message"}
+                id={styles['type-a-message']}
+                autoComplete={"off"}
+                disabled={this.state.loadingState !== 'ready'}
+                onChange={this.onMessageChanged}
+                value={this.state.newMessage}
+              />
+                <Button icon="enter" htmlType="submit" type={"submit"}/>
+              </Input.Group>
+            </Form>
+          </div>
+          <div style={{flexBasis: "10%"}}>
+            <Dropzone
+                onDrop={this.onDrop}
+                accept="image/*">
                 {({getRootProps, getInputProps, isDragActive}) => (
                     <div {...getRootProps()} className={`${styles.Dropzone} ${isDragActive? styles.Highlight : ''}`}>
                         <input id="files" {...getInputProps()} />
@@ -119,6 +130,7 @@ class ChatChannel extends Component {
                     </div>
                 )}
             </Dropzone>
+          </div>
         </div>
     );
   }

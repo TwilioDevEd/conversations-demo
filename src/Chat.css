@@ -5,6 +5,13 @@ div {
 #ChatWindow {
   border: 1px solid #eee;
   border-radius: 8px;
+  background: #fff;
+}
+
+#SelectedChannel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 #participants {
@@ -19,6 +26,12 @@ div {
   margin-right: 0.5em;
   height: 70vh;
   overflow: scroll;
+}
+
+#OpenChannel {
+  display: flex;
+  flex-basis: 100%;
+  flex-direction: column;
 }
 
 .nav-pills .nav-item {

@@ -4,6 +4,8 @@ import ChatChannel from './ChatChannel';
 import './Chat.css';
 import { BrowserRouter as Router, NavLink, Route, Redirect } from 'react-router-dom';
 import LoginPage from "./LoginPage";
+import {Layout, List, Menu} from "antd";
+const { Content, Sider, Header } = Layout;
 
 class ChatApp extends React.Component {
   constructor(props) {
@@ -38,7 +40,9 @@ class ChatApp extends React.Component {
   };
 
   logOut = event => {
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
     this.setState({
       name: '',
       loggedIn: false,
@@ -92,54 +96,82 @@ class ChatApp extends React.Component {
 
     if (this.state.loggedIn) {
       loginOrChat = (
-        <div id="ChatWindow" className="container">
-          <div>
+          <div id="ChatWindow" className="container" style={{height: "100%"}}>
             <Router>
-              <div className="row">
-                <div id="Channels" className="col-sm-4">
-                  <h3>Open Conversations</h3>
-                  { this.state.channels.map(channel => (
-                        <NavLink key={channel.sid}
-                                 to={`/channels/${channel.sid}`}
-                                 className="list-group-item list-group-item-action"
-                                 activeClassName="active">
-                          {channel.sid}
-                        </NavLink>
-                  ))}
-                </div>
+              <Layout style={{height: "100%"}}>
+                <Content>
+                  <Layout style={{height: "100%", background: "#fefefe"}}>
+                    <Sider
+                        theme={"light"}
+                        width={350}
+                    >
+                      <List
+                          bordered={true}
+                          style={{height: "100%"}}
+                          loading={this.state.channels.length === 0}
+                          header={"Open Conversations"}
+                          dataSource={this.state.channels}
+                          renderItem={item => {
+                            return (
+                              <List.Item key={item.sid}>
+                                <NavLink to={`/channels/${item.sid}`}>{item.sid}</NavLink>
+                              </List.Item>
+                            );
+                          }}
+                      />
+                    </Sider>
+                    <Content>
+                      <Layout style={{height: "100%"}}>
+                        <Header>
+                          <Menu
+                              theme="dark"
+                              mode="horizontal"
+                              style={{ lineHeight: '64px' }}
+                          >
+                            <Menu.Item key="1"
+                                       onClick={() => this.logOut()}
+                            >
+                              Log Out
+                            </Menu.Item>
+                          </Menu>
+                        </Header>
+                        <Content>
+                          <div id="SelectedChannel">
+                            <Route path="/channels/:selected_channel"
+                                   render={({match}) => {
+                                     let selectedChannelSid = match.params.selected_channel;
+                                     let selectedChannel = this.state.channels.find(
+                                         it => it.sid === selectedChannelSid);
+                                     if (selectedChannel) {
+                                       return (
+                                           <ChatChannel channelProxy={selectedChannel}
+                                                        myIdentity={this.state.name}/>
+                                       );
+                                     } else {
+                                       return (
+                                           <Redirect to="/channels"/>
+                                       )
+                                     }
+                                   }}/>
 
-                <div id="SelectedChannel" className="col-lg">
-                  <Route path="/channels/:selected_channel" render={({match}) => {
-                    let selectedChannelSid = match.params.selected_channel;
-                    let selectedChannel = this.state.channels.find(it => it.sid === selectedChannelSid);
-                    if (selectedChannel)
-                      return (
-                        <ChatChannel channelProxy={selectedChannel}
-                                    myIdentity={this.state.name} />
-                      );
-                    else
-                      return (
-                        <Redirect to="/channels" />
-                      )
-                  }} />
-
-                  <Route exact path="/" render={(match) => <h4>{this.state.statusString}</h4> } />
-                </div>
-              </div>
+                            <Route exact path="/" render={(match) =>
+                                <h4>{this.state.statusString}</h4>}/>
+                          </div>
+                        </Content>
+                      </Layout>
+                    </Content>
+                  </Layout>
+                </Content>
+              </Layout>
             </Router>
           </div>
-          <br /><br />
-          <form onSubmit={this.logOut}>
-          <button>Log out</button>
-          </form>
-        </div>
       );
     } else {
       loginOrChat = <LoginPage onSubmit={this.logIn}/>
     }
 
     return (
-      <div>
+      <div style={{height: "100%"}}>
         {loginOrChat}
       </div>
     );

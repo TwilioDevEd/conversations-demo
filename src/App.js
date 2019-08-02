@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ChatApp from './ChatApp';
-import './App.css';
+import './assets/App.css';
 
 class App extends Component {
   constructor(props) {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Chat.css';
+import './assets/Chat.css';
 import MessageBubble from './MessageBubble'
 import Dropzone from 'react-dropzone';
 import styles from './assets/ChatChannel.module.css'

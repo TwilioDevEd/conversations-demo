@@ -1,5 +1,5 @@
 {
-  "name": "sessions-demo",
+  "name": "conversations-demo",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:3001",

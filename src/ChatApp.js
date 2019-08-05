@@ -127,7 +127,7 @@ class ChatApp extends React.Component {
                             <div style={{ display: 'flex', width: '100%' }}>
                                 <HeaderItem>
                                     <Text strong style={{ color: 'white' }}>
-                                        {selectedChannel && selectedChannel.friendlyName}
+                                        {selectedChannel && (selectedChannel.friendlyName || selectedChannel.sid)}
                                     </Text>
                                 </HeaderItem>
                                 <HeaderItem style={{ float: "right", marginLeft: 'auto' }}>

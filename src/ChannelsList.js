@@ -36,7 +36,7 @@ export class ChannelsList extends React.Component {
                                 strong
                                 className={chatChannelsItemStyles['channel-item-text']}
                             >
-                                {item.friendlyName}
+                                {item.friendlyName || item.sid}
                             </Text>
                         </List.Item>
                     )

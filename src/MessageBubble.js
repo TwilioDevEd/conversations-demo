@@ -114,7 +114,7 @@ class Media extends PureComponent {
                     </div>
                     <div
                         className={styles.picture_preview}
-                        style={{background: `url(${url})`, zIndex: 122}}>
+                        style={{backgroundImage: `url(${url})`, zIndex: 122}}>
                     </div>
                 </div>
                 }

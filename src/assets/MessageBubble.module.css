@@ -57,6 +57,9 @@
 .picture_preview {
     width: 250px;
     height: 250px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .picture_preview {

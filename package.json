@@ -14,7 +14,7 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.5",
     "request-promise": "^4.2.4",
-    "twilio": "~3.31.1",
+    "twilio": "~3.33.4",
     "twilio-chat": "^3.3.1"
   },
   "devDependencies": {

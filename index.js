@@ -30,20 +30,21 @@ app.listen(config.port, () => {
 
 // ============================================
 // ============================================
-// ========= HANDLE NEW-SESSION HOOK ==========
+// ====== HANDLE NEW-CONVERSATION HOOK ========
 // ============================================
 // ============================================
+let client = new twilio(config.twilio.accountSid, config.twilio.authToken);
+
 app.post('/chat', (req, res) => {
   console.log("Received a webhook:", req.body);
-  if (req.body.EventType === 'onSessionAdded' && req.body.CreatedBy != '+37258821796' && !req.body.CreatedBy != 'whatsapp:+13602484847') {
-    let client = new twilio(config.twilio.accountSid, config.twilio.authToken); 
-    client.messaging.sessions(req.body.SessionSid)
+  if (req.body.EventType === 'onConversationAdded') {
+    client.conversations.v1.conversations(req.body.ConversationSid)
       .participants
       .create({
-          identity: "Andres"
+          identity: "Tack"
         })
-      .then(participant => console.log(`Added 'Andres' to ${req.body.SessionSid}.`))
-      .catch(err => console.error(`Failed to add a member to ${req.body.SessionSid}!`, err));
+      .then(participant => console.log(`Added 'Andres' to ${req.body.ConversationSid}.`))
+      .catch(err => console.error(`Failed to add a member to ${req.body.ConversationSid}!`, err));
   } else {
     console.log("(ignored!)");
   }

@@ -67,13 +67,9 @@ class ChatApp extends React.Component {
   };
 
   getToken = () => {
-    fetch(`/token/${this.state.name}`, {
-      method: 'POST'
-    })
-      .then(response => response.json())
-      .then(data => {
-        this.setState({ token: data.token }, this.initChat);
-      });
+    // Paste your unique Chat token function
+    const myToken = '<Your token here>';
+    this.setState({token: myToken}, this.initChat);
   };
 
   initChat = async () => {

@@ -3,7 +3,7 @@ import {Badge, Icon, Layout, Spin, Typography} from "antd";
 import { Client as ChatClient } from 'twilio-chat';
 
 import './assets/Chat.css';
-import './assets/ChatChannelSection.scss';
+import './assets/ChatChannelSection.css';
 import { ReactComponent as Logo } from './assets/twilio-mark-red.svg';
 
 import ChatChannel from './ChatChannel';

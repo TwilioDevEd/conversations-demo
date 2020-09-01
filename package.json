@@ -12,7 +12,7 @@
     "react-dom": "^16.8.6",
     "react-dropzone": "^10.1.5",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.0.5",
+    "react-scripts": "3.4.3",
     "request-promise": "^4.2.4",
     "twilio": "~3.33.4",
     "twilio-chat": "^3.3.1"

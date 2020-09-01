@@ -68,8 +68,7 @@ class ChatApp extends React.Component {
 
   getToken = () => {
     // Paste your unique Chat token function
-    const myToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzMwZTljZmE1N2JhMjEzZjBiMzk4MTFjNjhkZDQ4NWQ3LTE1OTg4OTU0NTMiLCJncmFudHMiOnsiaWRlbnRpdHkiOiJ0ZXN0UGluZWFwcGxlIiwiY2hhdCI6eyJzZXJ2aWNlX3NpZCI6IklTZTkyMTZkMDRiNzhjNDAyMjk4OTlmZmQ5M2FmZjMzYzQifX0sImlhdCI6MTU5ODg5NTQ1MywiZXhwIjoxNTk4ODk5MDUzLCJpc3MiOiJTSzMwZTljZmE1N2JhMjEzZjBiMzk4MTFjNjhkZDQ4NWQ3Iiwic3ViIjoiQUMzYzk2ZjExYzhjMTk0MmFiMDJlY2E5MTViMWRlYmQyNyJ9.g9Fnlm5tu8R03Zm8OBeLR0F-6KtwH32ikgbfIzojocw";
+    const myToken = "<Your token here>";
     this.setState({ token: myToken }, this.initChat);
   };
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ChatApp from './ChatApp';
+import ConversationsApp from './ConversationsApp';
 import './assets/App.css';
 import 'antd/dist/antd.css';
 
@@ -11,7 +11,7 @@ class App extends Component {
   }
 
   render() {
-    return <ChatApp />
+    return <ConversationsApp />
   }
 }
 

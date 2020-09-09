@@ -1,29 +1,29 @@
 import React, { Component } from 'react';
-import './assets/Chat.css';
+import './assets/Conversation.css';
 import MessageBubble from './MessageBubble'
 import Dropzone from 'react-dropzone';
-import styles from './assets/ChatChannel.module.css'
+import styles from './assets/Conversation.module.css'
 import {Button, Form, Icon, Input} from "antd";
-import ChatMessages from "./ChatMessages";
+import ConversationsMessages from "./ConversationsMessages";
 import PropTypes from "prop-types";
 
-class ChatChannel extends Component {
+class Conversation extends Component {
   constructor(props) {
     super(props);
     this.state = {
         newMessage: '',
-        channelProxy: props.channelProxy,
+        conversationProxy: props.conversationProxy,
         messages: [],
         loadingState: 'initializing',
-        boundChannels: new Set()
+        boundConversations: new Set()
     };
   }
 
-  loadMessagesFor = (thisChannel) => {
-    if (this.state.channelProxy === thisChannel) {
-        thisChannel.getMessages()
+  loadMessagesFor = (thisConversation) => {
+    if (this.state.conversationProxy === thisConversation) {
+        thisConversation.getMessages()
             .then(messagePaginator => {
-                if (this.state.channelProxy === thisChannel) {
+                if (this.state.conversationProxy === thisConversation) {
                     this.setState({ messages: messagePaginator.items, loadingState: 'ready' });
                 }
             })
@@ -35,40 +35,40 @@ class ChatChannel extends Component {
   };
 
   componentDidMount = () => {
-      if (this.state.channelProxy) {
-        this.loadMessagesFor(this.state.channelProxy);
+      if (this.state.conversationProxy) {
+        this.loadMessagesFor(this.state.conversationProxy);
 
-        if (!this.state.boundChannels.has(this.state.channelProxy)) {
-            let newChannel = this.state.channelProxy;
-            newChannel.on('messageAdded', m => this.messageAdded(m, newChannel));
-            this.setState({boundChannels: new Set([...this.state.boundChannels, newChannel])});
+        if (!this.state.boundConversations.has(this.state.conversationProxy)) {
+            let newConversation = this.state.conversationProxy;
+            newConversation.on('messageAdded', m => this.messageAdded(m, newConversation));
+            this.setState({boundConversations: new Set([...this.state.boundConversations, newConversation])});
         }
       }
   }
 
   componentDidUpdate = (oldProps, oldState) => {
-    if (this.state.channelProxy !== oldState.channelProxy) {
-        this.loadMessagesFor(this.state.channelProxy);
+    if (this.state.conversationProxy !== oldState.conversationProxy) {
+        this.loadMessagesFor(this.state.conversationProxy);
 
-        if (!this.state.boundChannels.has(this.state.channelProxy)) {
-            let newChannel = this.state.channelProxy;
-            newChannel.on('messageAdded', m => this.messageAdded(m, newChannel));
-            this.setState({boundChannels: new Set([...this.state.boundChannels, newChannel])});
+        if (!this.state.boundConversations.has(this.state.conversationProxy)) {
+            let newConversation = this.state.conversationProxy;
+            newConversation.on('messageAdded', m => this.messageAdded(m, newConversation));
+            this.setState({boundConversations: new Set([...this.state.boundConversations, newConversation])});
         }
     }
   };
 
   static getDerivedStateFromProps(newProps, oldState) {
-    let logic = (oldState.loadingState === 'initializing') || oldState.channelProxy !== newProps.channelProxy;
+    let logic = (oldState.loadingState === 'initializing') || oldState.conversationProxy !== newProps.conversationProxy;
     if (logic) {
-      return { loadingState: 'loading messages', channelProxy: newProps.channelProxy };
+      return { loadingState: 'loading messages', conversationProxy: newProps.conversationProxy };
     } else {
       return null;
     }
   }
 
-  messageAdded = (message, targetChannel) => {
-    if (targetChannel === this.state.channelProxy)
+  messageAdded = (message, targetConversation) => {
+    if (targetConversation === this.state.conversationProxy)
         this.setState((prevState, props) => ({
             messages: [...prevState.messages, message]
         }));
@@ -82,11 +82,11 @@ class ChatChannel extends Component {
     event.preventDefault();
     const message = this.state.newMessage;
     this.setState({ newMessage: '' });
-    this.state.channelProxy.sendMessage(message);
+    this.state.conversationProxy.sendMessage(message);
   };
 
   onDrop = acceptedFiles => {
-    this.state.channelProxy.sendMessage({contentType: acceptedFiles[0].type, media: acceptedFiles[0]});
+    this.state.conversationProxy.sendMessage({contentType: acceptedFiles[0].type, media: acceptedFiles[0]});
   };
 
   render = () => {
@@ -117,7 +117,7 @@ class ChatChannel extends Component {
                 >
                   <input id="files" {...getInputProps()} />
                   <div style={{flexBasis: "100%", flexGrow: 2, flexShrink: 1, overflowY: "scroll"}}>
-                    <ChatMessages
+                    <ConversationsMessages
                         identity={this.props.myIdentity}
                         messages={this.state.messages}/>
                   </div>
@@ -152,8 +152,8 @@ class ChatChannel extends Component {
   }
 }
 
-ChatChannel.propTypes = {
+Conversation.propTypes = {
   myIdentity: PropTypes.string.isRequired
 };
 
-export default ChatChannel;
+export default Conversation;

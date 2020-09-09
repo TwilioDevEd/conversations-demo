@@ -8,7 +8,7 @@ div {
   background: #fff;
 }
 
-#SelectedChannel {
+#SelectedConversation {
   height: 100%;
   display: flex;
   flex-direction: column;

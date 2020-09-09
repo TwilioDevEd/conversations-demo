@@ -2,7 +2,7 @@ import MessageBubble from "./MessageBubble";
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 
-class ChatMessages extends PureComponent {
+class ConversationsMessages extends PureComponent {
   render = () => {
     return (
         <div id="messages">
@@ -20,9 +20,9 @@ class ChatMessages extends PureComponent {
   }
 }
 
-ChatMessages.propTypes = {
+ConversationsMessages.propTypes = {
   identity: PropTypes.string.isRequired,
   messages: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
-export default ChatMessages;
+export default ConversationsMessages;

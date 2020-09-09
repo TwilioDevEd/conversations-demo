@@ -33,7 +33,7 @@ class ChatApp extends React.Component {
     };
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     if (this.state.loggedIn) {
       this.getToken();
       this.setState({ statusString: "Fetching credentials…" });

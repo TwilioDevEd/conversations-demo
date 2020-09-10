@@ -21,12 +21,12 @@ code {
     height: 100vh;
 }
 
-.chat-window-wrapper {
+.conversations-window-wrapper {
   height: inherit;
   background-color: #f0f2f5;
 }
 
-.chat-window-container {
+.conversations-window-container {
   position: relative;
   max-width: 1268px;
   height: calc(100% - 16px);

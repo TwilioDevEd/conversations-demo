@@ -16,7 +16,7 @@ The demo application can be configured and run in two ways:
 * Cloning this repo and running locally
 
 # Replacing the Chat Token
-In order for your Chat Application to work, we need to authenticate a Chat user by retrieving a short-lived token attached to your API Key. The `getToken` function in `ChatApp.js` has a placeholder for your chat token.
+In order for your Chat Application to work, we need to authenticate a Chat user by retrieving a short-lived token attached to your API Key. The `getToken` function in `ConversationsApp.js` has a placeholder for your chat token.
 
 You can generate a token in a few ways:
 * Using the [twilio-cli](https://www.twilio.com/docs/twilio-cli/quickstart) and [twilio token plugin](https://github.com/twilio-labs/plugin-token) (Recommended)

@@ -23,6 +23,7 @@ You can generate a token in a few ways:
 * Using [Twilio Runtime Function](https://www.twilio.com/docs/runtime/functions)
 
  For the twilio-cli option, run the following command and enter the resulting token into the placeholder:
- `twilio token:chat --identity <The test chat username> --chat-service-sid <ISXXX...>
+ 
+ `twilio token:chat --identity <The test chat username> --chat-service-sid <ISXXX...>`
 
 After generating a token manually, it will expire after a timeout period, so you will need to replace the token. To use this in production software, you would typically create a token endpoint in your back end application that uses your existing user authentication strategy.

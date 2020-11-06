@@ -1,6 +1,8 @@
 try {
-  require('dotenv').load();
-} catch (e) { }
+  require('dotenv').config();
+} catch (e) { 
+  console.error('error loading dotenv', e);
+}
 
 module.exports = {
   twilio: {

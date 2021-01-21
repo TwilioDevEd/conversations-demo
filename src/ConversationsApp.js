@@ -2,19 +2,19 @@ import React from "react";
 import { Badge, Icon, Layout, Spin, Typography } from "antd";
 import { Client as ConversationsClient } from "@twilio/conversations";
 
-import "./assets/Chat.css";
-import "./assets/ChatChannelSection.css";
+import "./assets/Conversation.css";
+import "./assets/ConversationSection.css";
 import { ReactComponent as Logo } from "./assets/twilio-mark-red.svg";
 
-import ChatChannel from "./ChatChannel";
+import Conversation from "./Conversation";
 import LoginPage from "./LoginPage";
-import { ChannelsList } from "./ChannelsList";
+import { ConversationsList } from "./ConversationsList";
 import { HeaderItem } from "./HeaderItem";
 
 const { Content, Sider, Header } = Layout;
 const { Text } = Typography;
 
-class ChatApp extends React.Component {
+class ConversationsApp extends React.Component {
   constructor(props) {
     super(props);
 
@@ -26,14 +26,14 @@ class ChatApp extends React.Component {
       loggedIn,
       token: null,
       statusString: null,
-      chatReady: false,
-      channels: [],
-      selectedChannelSid: null,
+      conversationsReady: false,
+      conversations: [],
+      selectedConversationSid: null,
       newMessage: ""
     };
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     if (this.state.loggedIn) {
       this.getToken();
       this.setState({ statusString: "Fetching credentials…" });
@@ -56,28 +56,28 @@ class ChatApp extends React.Component {
       name: "",
       loggedIn: false,
       token: "",
-      chatReady: false,
+      conversationsReady: false,
       messages: [],
       newMessage: "",
-      channels: []
+      conversations: []
     });
 
     localStorage.removeItem("name");
-    this.chatClient.shutdown();
+    this.conversationsClient.shutdown();
   };
 
   getToken = () => {
     // Paste your unique Chat token function
     const myToken = "<Your token here>";
-    this.setState({ token: myToken }, this.initChat);
+    this.setState({ token: myToken }, this.initConversations);
   };
 
-  initChat = async () => {
-    window.chatClient = ConversationsClient;
-    this.chatClient = await ConversationsClient.create(this.state.token);
+  initConversations = async () => {
+    window.conversationsClient = ConversationsClient;
+    this.conversationsClient = await ConversationsClient.create(this.state.token);
     this.setState({ statusString: "Connecting to Twilio…" });
 
-    this.chatClient.on("connectionStateChanged", (state) => {
+    this.conversationsClient.on("connectionStateChanged", (state) => {
       if (state === "connecting")
         this.setState({
           statusString: "Connecting to Twilio…",
@@ -92,56 +92,56 @@ class ChatApp extends React.Component {
       if (state === "disconnecting")
         this.setState({
           statusString: "Disconnecting from Twilio…",
-          chatReady: false,
+          conversationsReady: false,
           status: "default"
         });
       if (state === "disconnected")
         this.setState({
           statusString: "Disconnected.",
-          chatReady: false,
+          conversationsReady: false,
           status: "warning"
         });
       if (state === "denied")
         this.setState({
           statusString: "Failed to connect.",
-          chatReady: false,
+          conversationsReady: false,
           status: "error"
         });
     });
-    this.chatClient.on("conversationJoined", (channel) => {
-      this.setState({ channels: [...this.state.channels, channel] });
+    this.conversationsClient.on("conversationJoined", (conversation) => {
+      this.setState({ conversations: [...this.state.conversations, conversation] });
     });
-    this.chatClient.on("conversationLeft", (thisChannel) => {
+    this.conversationsClient.on("conversationLeft", (thisConversation) => {
       this.setState({
-        channels: [...this.state.channels.filter((it) => it !== thisChannel)]
+        conversations: [...this.state.conversations.filter((it) => it !== thisConversation)]
       });
     });
   };
 
   render() {
-    const { channels, selectedChannelSid, status } = this.state;
-    const selectedChannel = channels.find(
-      (it) => it.sid === selectedChannelSid
+    const { conversations, selectedConversationSid, status } = this.state;
+    const selectedConversation = conversations.find(
+      (it) => it.sid === selectedConversationSid
     );
 
-    let channelContent;
-    if (selectedChannel) {
-      channelContent = (
-        <ChatChannel
-          channelProxy={selectedChannel}
+    let conversationContent;
+    if (selectedConversation) {
+      conversationContent = (
+        <Conversation
+          conversationProxy={selectedConversation}
           myIdentity={this.state.name}
         />
       );
     } else if (status !== "success") {
-      channelContent = "Loading your chat!";
+      conversationContent = "Loading your conversation!";
     } else {
-      channelContent = "";
+      conversationContent = "";
     }
 
     if (this.state.loggedIn) {
       return (
-        <div className="chat-window-wrapper">
-          <Layout className="chat-window-container">
+        <div className="conversations-window-wrapper">
+          <Layout className="conversations-window-container">
             <Header
               style={{ display: "flex", alignItems: "center", padding: 0 }}
             >
@@ -165,8 +165,8 @@ class ChatApp extends React.Component {
               <div style={{ display: "flex", width: "100%" }}>
                 <HeaderItem>
                   <Text strong style={{ color: "white" }}>
-                    {selectedChannel &&
-                      (selectedChannel.friendlyName || selectedChannel.sid)}
+                    {selectedConversation &&
+                      (selectedConversation.friendlyName || selectedConversation.sid)}
                   </Text>
                 </HeaderItem>
                 <HeaderItem style={{ float: "right", marginLeft: "auto" }}>
@@ -194,16 +194,16 @@ class ChatApp extends React.Component {
             </Header>
             <Layout>
               <Sider theme={"light"} width={250}>
-                <ChannelsList
-                  channels={channels}
-                  selectedChannelSid={selectedChannelSid}
-                  onChannelClick={(item) => {
-                    this.setState({ selectedChannelSid: item.sid });
+                <ConversationsList
+                  conversations={conversations}
+                  selectedConversationSid={selectedConversationSid}
+                  onConversationClick={(item) => {
+                    this.setState({ selectedConversationSid: item.sid });
                   }}
                 />
               </Sider>
-              <Content className="chat-channel-section">
-                <div id="SelectedChannel">{channelContent}</div>
+              <Content className="conversation-section">
+                <div id="SelectedConversation">{conversationContent}</div>
               </Content>
             </Layout>
           </Layout>
@@ -215,4 +215,4 @@ class ChatApp extends React.Component {
   }
 }
 
-export default ChatApp;
+export default ConversationsApp;

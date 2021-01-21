@@ -16,11 +16,14 @@ The demo application can be configured and run in two ways:
 * Cloning this repo and running locally
 
 # Replacing the Chat Token
-In order for your Chat Application to work, we need to authenticate a Chat user by retrieving a short-lived token attached to your API Key. The `getToken` function in `ChatApp.js` has a placeholder for your chat token.
+In order for your Chat Application to work, we need to authenticate a Chat user by retrieving a short-lived token attached to your API Key. The `getToken` function in `ConversationsApp.js` has a placeholder for your chat token.
 
 You can generate a token in a few ways:
 * Using the [twilio-cli](https://www.twilio.com/docs/twilio-cli/quickstart) and [twilio token plugin](https://github.com/twilio-labs/plugin-token) (Recommended)
 * Using [Twilio Runtime Function](https://www.twilio.com/docs/runtime/functions)
 
  For the twilio-cli option, run the following command and enter the resulting token into the placeholder:
- `twilio token:chat --identity <The test chat username> --chat-service-sid <ISXXX...>
+ 
+ `twilio token:chat --identity <The test chat username> --chat-service-sid <ISXXX...>`
+
+After generating a token manually, it will expire after a timeout period, so you will need to replace the token. To use this in production software, you would typically create a token endpoint in your back end application that uses your existing user authentication strategy.

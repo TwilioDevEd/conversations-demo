@@ -1,11 +1,11 @@
-.channel-item {
-  &:hover, &.channel-item--active {
+.conversation-item {
+  &:hover, &.conversation-item--active {
     background-color: #008CFF;
     cursor: pointer;
     margin-right: -2px;
     margin-left: -1px;
 
-    .channel-item-text {
+    .conversation-item-text {
       color: white;
     }
   }

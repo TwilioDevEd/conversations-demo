@@ -4,18 +4,18 @@
   "private": true,
   "proxy": "http://localhost:3001",
   "dependencies": {
+    "@twilio/conversations": "^0.1.0",
     "antd": "^3.26.20",
-    "ngrok": "^3.2.7",
+    "ngrok": "^3.4.0",
     "node-sass": "^4.12.0",
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-dropzone": "^10.2.2",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "3.4.3",
+    "react-scripts": "4.0.0",
     "request-promise": "^4.2.6",
-    "twilio": "~3.45.0",
-    "@twilio/conversations": "^0.1.0"
+    "twilio": "~4.6.o"
   },
   "devDependencies": {
     "concurrently": "^3.6.1"

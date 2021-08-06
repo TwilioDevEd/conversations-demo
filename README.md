@@ -2,6 +2,8 @@
 
 This is a lightweight application based on [Twilio Conversations](https://www.twilio.com/docs/conversations).
 
+Please follow the directions for the [Twilio Conversations Quickstart](https://www.twilio.com/docs/conversations/quickstart) for a complete demo of this application with both SMS and chat participants.
+
 # Configuring and getting started
 
 This demo requires a Twilio account and a working Conversations Service SID.

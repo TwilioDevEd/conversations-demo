@@ -1,22 +1,25 @@
 # The Demo Conversations App
 
-This is a lightweight application based on [Twilio Chat](https://www.twilio.com/docs/chat).
+This is a lightweight application based on [Twilio Conversations](https://www.twilio.com/docs/conversations).
 
 # Configuring and getting started
 
-This demo requires a Twilio account and a working Chat Service SID.
+This demo requires a Twilio account and a working Conversations Service SID.
 You'll need to collect some credentials from the [Twilio Console](https://www.twilio.com/console):
 * Your Account SID (`ACXXX`) and Auth Token, both accessible from the [Dashboard](https://twilio.com/console/dashboard)
-* Your Account's Chat Service Sid `ISXXX` SID which is attached to your Chat Service
+* Your Account's Conversations Service Sid `ISXXX` SID which is attached to your Conversations Service
 
 # Testing
 
 The demo application can be configured and run in two ways:
-* Forking [the demo-chat-application on CodeSandbox.io](https://codesandbox.io/s/github/TwilioDevEd/conversations-demo) (recommended)
+* Forking [the demo-conversations-application on CodeSandbox.io](https://codesandbox.io/s/github/TwilioDevEd/conversations-demo) (recommended)
 * Cloning this repo and running locally
 
-# Replacing the Chat Token
-In order for your Chat Application to work, we need to authenticate a Chat user by retrieving a short-lived token attached to your API Key. The `getToken` function in `ConversationsApp.js` has a placeholder for your chat token.
+# Replacing the Access Token
+
+The Conversations API uses an Access Token with a Chat Grant for client-side applications such as this one to authenticate themselves with Conversations Services in your Twilio Account.
+
+In order for your Conversations Application to work, we need to authenticate a Conversations user by retrieving a short-lived token attached to your API Key. The `getToken` function in `ConversationsApp.js` has a placeholder for your chat token.
 
 You can generate a token in a few ways:
 * Using the [twilio-cli](https://www.twilio.com/docs/twilio-cli/quickstart) and [twilio token plugin](https://github.com/twilio-labs/plugin-token) (Recommended)

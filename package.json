@@ -1,10 +1,10 @@
 {
   "name": "conversations-demo-sdk-update",
-  "version": "1.2.3",
+  "version": "1.2.0",
   "private": true,
   "proxy": "http://localhost:3001",
   "dependencies": {
-    "@twilio/conversations": "^1.2.3",
+    "@twilio/conversations": "^1.2.0",
     "antd": "^3.26.20",
     "ngrok": "^3.4.0",
     "node-sass": "^6.0.1",

@@ -1,7 +1,5 @@
 try {
-  if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
-  }
+  require('dotenv').config();
 } catch (e) { 
   console.error('error loading dotenv', e);
 }

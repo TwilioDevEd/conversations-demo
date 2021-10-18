@@ -16,6 +16,9 @@ You'll need to collect some credentials from the [Twilio Console](https://www.tw
 The demo application can be configured and run in two ways:
 * Forking [the demo-conversations-application on CodeSandbox.io](https://codesandbox.io/s/github/TwilioDevEd/conversations-demo) (recommended)
 * Cloning this repo and running locally
+  * Remember to copy the `.env.example` file to `.env` and replace the variables values with
+  the ones from your account. By default `NODE_ENV` is set to `development`.
+  
 
 # Replacing the Access Token
 

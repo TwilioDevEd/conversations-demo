@@ -57,7 +57,12 @@ app.post('/outbound-status', (req, res) => {
   res.sendStatus(200);
 })
 
-
+app.use((error, req, res, next) => {
+  res.status(500)
+  res.send({error: error})
+  console.error(error.stack)
+  next(error)
+})
 
 var ngrokOptions = {
   proto: 'http',

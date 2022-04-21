@@ -68,13 +68,16 @@ class ConversationsApp extends React.Component {
 
   getToken = () => {
     // Paste your unique Chat token function
-    const myToken = "<Your token here>";
+    const myToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzhmZjFhOTFjZmE3NDU1MThlZWNiYmExODk1N2RmMzljLTE2NTA1ODM3MTgiLCJncmFudHMiOnsiaWRlbnRpdHkiOiJub3RhcmlhMXk1IiwiY2hhdCI6eyJzZXJ2aWNlX3NpZCI6IklTOWU2NDM4NmU0YmQwNDVmZmI4ZTM3ODA2ODE2MTU2NjkifX0sImlhdCI6MTY1MDU4MzcxOCwiZXhwIjoxNjUwNTg3MzE4LCJpc3MiOiJTSzhmZjFhOTFjZmE3NDU1MThlZWNiYmExODk1N2RmMzljIiwic3ViIjoiQUMwODVlYmQ3OTYzNDljY2E3NDIwOTEzN2U4YjQ1ZDBkNiJ9.jLL237vnXR85TTPnmpQWBC-18xbVPQqINoE_dw30ZnQ";
     this.setState({ token: myToken }, this.initConversations);
   };
 
   initConversations = async () => {
     window.conversationsClient = ConversationsClient;
-    this.conversationsClient = await ConversationsClient.create(this.state.token);
+    this.conversationsClient = await ConversationsClient.create(
+      this.state.token
+    );
     this.setState({ statusString: "Connecting to Twilio…" });
 
     this.conversationsClient.on("connectionStateChanged", (state) => {
@@ -109,11 +112,15 @@ class ConversationsApp extends React.Component {
         });
     });
     this.conversationsClient.on("conversationJoined", (conversation) => {
-      this.setState({ conversations: [...this.state.conversations, conversation] });
+      this.setState({
+        conversations: [...this.state.conversations, conversation]
+      });
     });
     this.conversationsClient.on("conversationLeft", (thisConversation) => {
       this.setState({
-        conversations: [...this.state.conversations.filter((it) => it !== thisConversation)]
+        conversations: [
+          ...this.state.conversations.filter((it) => it !== thisConversation)
+        ]
       });
     });
   };
@@ -166,7 +173,8 @@ class ConversationsApp extends React.Component {
                 <HeaderItem>
                   <Text strong style={{ color: "white" }}>
                     {selectedConversation &&
-                      (selectedConversation.friendlyName || selectedConversation.sid)}
+                      (selectedConversation.friendlyName ||
+                        selectedConversation.sid)}
                   </Text>
                 </HeaderItem>
                 <HeaderItem style={{ float: "right", marginLeft: "auto" }}>

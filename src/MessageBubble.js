@@ -1,7 +1,8 @@
 import React, { Component, PureComponent } from "react";
 import styles from "./assets/MessageBubble.module.css";
 import PropTypes from "prop-types";
-import { Spin, Modal, Icon } from "antd";
+import { Spin, Modal } from "antd";
+import Icon from '@ant-design/icons';
 import WhatsappIcon from "./WhatsappIcon";
 import ChatIcon from "./ChatIcon";
 

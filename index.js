@@ -66,7 +66,8 @@ app.use((error, req, res, next) => {
 
 var ngrokOptions = {
   proto: 'http',
-  addr: config.port
+  addr: config.port,
+  configPath: '<PATH TO ngrok.yml>'
 };
 
 if (config.ngrokSubdomain) {

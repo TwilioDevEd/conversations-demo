@@ -3,7 +3,8 @@ import './assets/Conversation.css';
 import MessageBubble from './MessageBubble'
 import Dropzone from 'react-dropzone';
 import styles from './assets/Conversation.module.css'
-import {Button, Form, Icon, Input} from "antd";
+import {Button, Form, Input} from "antd";
+import Icon from '@ant-design/icons';
 import ConversationsMessages from "./ConversationsMessages";
 import PropTypes from "prop-types";
 
@@ -122,7 +123,7 @@ class Conversation extends Component {
                         messages={this.state.messages}/>
                   </div>
                   <div>
-                    <Form onSubmit={this.sendMessage}>
+                    <Form>
                       <Input.Group compact={true} style={{
                         width: "100%",
                         display: "flex",
@@ -139,7 +140,7 @@ class Conversation extends Component {
                             onChange={this.onMessageChanged}
                             value={this.state.newMessage}
                         />
-                        <Button icon="enter" htmlType="submit" type={"submit"}/>
+                        <Button onClick={this.sendMessage} icon="enter" htmlType="submit" type="submit"/>
                       </Input.Group>
                     </Form>
                   </div>

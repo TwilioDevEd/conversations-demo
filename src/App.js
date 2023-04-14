@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import ConversationsApp from './ConversationsApp';
 import './assets/App.css';
-import 'antd/dist/antd.css';
-
+import 'antd/dist/reset.css';
 
 class App extends Component {
   constructor(props) {

@@ -1,5 +1,6 @@
 import React from "react";
-import { Badge, Icon, Layout, Spin, Typography } from "antd";
+import { Badge, Layout, Spin, Typography } from "antd";
+import Icon from '@ant-design/icons';
 import { Client as ConversationsClient } from "@twilio/conversations";
 
 import "./assets/Conversation.css";

@@ -74,7 +74,7 @@ class ConversationsApp extends React.Component {
 
   initConversations = async () => {
     window.conversationsClient = ConversationsClient;
-    this.conversationsClient = await ConversationsClient.create(this.state.token);
+    this.conversationsClient = new ConversationsClient(this.state.token);
     this.setState({ statusString: "Connecting to Twilio…" });
 
     this.conversationsClient.on("connectionStateChanged", (state) => {

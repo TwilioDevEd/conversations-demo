@@ -68,7 +68,8 @@ class ConversationsApp extends React.Component {
 
   getToken = () => {
     // Paste your unique Chat token function
-    const myToken = "<Your token here>";
+    const myToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTS2Y4Y2I0MTExZmY4MWUyZDg3NGE2MDE0OTRkMjYyY2M5LTE2OTMyODM0MjAiLCJncmFudHMiOnsiaWRlbnRpdHkiOiJ0ZXN0UGluZWFwcGxlIiwiY2hhdCI6eyJzZXJ2aWNlX3NpZCI6IklTNTMwNWE3YWUxZTYxNGEzY2FiZWIxMWMwYmJhMTAzYjUifX0sImlhdCI6MTY5MzI4MzQyMCwiZXhwIjoxNjkzMjg3MDIwLCJpc3MiOiJTS2Y4Y2I0MTExZmY4MWUyZDg3NGE2MDE0OTRkMjYyY2M5Iiwic3ViIjoiQUMxMDExZDA4MjE3NjI0Y2Q0MTQ5ZWNkNzk5M2FkNDVhMSJ9.0GR3oKl6jHYINTZFTRRXpqqxzIrcWSF6bHby4afEYS4";
     this.setState({ token: myToken }, this.initConversations);
   };
 
@@ -109,11 +110,15 @@ class ConversationsApp extends React.Component {
         });
     });
     this.conversationsClient.on("conversationJoined", (conversation) => {
-      this.setState({ conversations: [...this.state.conversations, conversation] });
+      this.setState({
+        conversations: [...this.state.conversations, conversation]
+      });
     });
     this.conversationsClient.on("conversationLeft", (thisConversation) => {
       this.setState({
-        conversations: [...this.state.conversations.filter((it) => it !== thisConversation)]
+        conversations: [
+          ...this.state.conversations.filter((it) => it !== thisConversation)
+        ]
       });
     });
   };
@@ -166,7 +171,8 @@ class ConversationsApp extends React.Component {
                 <HeaderItem>
                   <Text strong style={{ color: "white" }}>
                     {selectedConversation &&
-                      (selectedConversation.friendlyName || selectedConversation.sid)}
+                      (selectedConversation.friendlyName ||
+                        selectedConversation.sid)}
                   </Text>
                 </HeaderItem>
                 <HeaderItem style={{ float: "right", marginLeft: "auto" }}>

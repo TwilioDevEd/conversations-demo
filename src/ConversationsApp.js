@@ -68,7 +68,8 @@ class ConversationsApp extends React.Component {
 
   getToken = () => {
     // Paste your unique Chat token function
-    const myToken = "<Your token here>";
+    const myToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzZkNWFkM2Q1ZTgzOGNiZjNlNTc2MWFjYTkyYjM2ZjJmLTE2OTY0MDI2OTMiLCJncmFudHMiOnsiaWRlbnRpdHkiOiJuaWtpdGFAc3R1ZGVudHdpc2UuaW8iLCJjaGF0Ijp7InNlcnZpY2Vfc2lkIjoiSVMyMDM5YmQxMGNiYjU0NWMxYWVhMjkwNjNjYTU0NWI5NCJ9fSwiaWF0IjoxNjk2NDAyNjkzLCJleHAiOjE2OTY0MDYyOTMsImlzcyI6IlNLNmQ1YWQzZDVlODM4Y2JmM2U1NzYxYWNhOTJiMzZmMmYiLCJzdWIiOiJBQ2NhNmZkZmFhMjgzZDNiZTJiMThiMmI0MGYzZmY4NmNmIn0.pUiX3CqGpyhF_5uj3RWbuNrTL-EDMQgWW4orjqR70rs";
     this.setState({ token: myToken }, this.initConversations);
   };
 
@@ -109,11 +110,15 @@ class ConversationsApp extends React.Component {
         });
     });
     this.conversationsClient.on("conversationJoined", (conversation) => {
-      this.setState({ conversations: [...this.state.conversations, conversation] });
+      this.setState({
+        conversations: [...this.state.conversations, conversation]
+      });
     });
     this.conversationsClient.on("conversationLeft", (thisConversation) => {
       this.setState({
-        conversations: [...this.state.conversations.filter((it) => it !== thisConversation)]
+        conversations: [
+          ...this.state.conversations.filter((it) => it !== thisConversation)
+        ]
       });
     });
   };
@@ -123,6 +128,9 @@ class ConversationsApp extends React.Component {
     const selectedConversation = conversations.find(
       (it) => it.sid === selectedConversationSid
     );
+
+    console.log(conversations);
+    console.log(selectedConversationSid);
 
     let conversationContent;
     if (selectedConversation) {
@@ -166,7 +174,8 @@ class ConversationsApp extends React.Component {
                 <HeaderItem>
                   <Text strong style={{ color: "white" }}>
                     {selectedConversation &&
-                      (selectedConversation.friendlyName || selectedConversation.sid)}
+                      (selectedConversation.friendlyName ||
+                        selectedConversation.sid)}
                   </Text>
                 </HeaderItem>
                 <HeaderItem style={{ float: "right", marginLeft: "auto" }}>
